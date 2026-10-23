@@ -1,0 +1,514 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="About Us">
+    <Navbar />
+
+    <main class="flex-grow pt-12 pb-24">
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-6 pt-16 md:pt-24 mb-24">
+            <div
+                class="flex flex-col-reverse md:flex-row items-center gap-12 lg:gap-20"
+            >
+                <!-- Left: Text Content -->
+                <div
+                    class="w-full md:w-1/2 flex flex-col items-start text-left"
+                >
+                    <span
+                        class="text-[#3B82F6] text-xs font-mono uppercase tracking-widest font-semibold mb-4 block"
+                    >
+                        Who We Are
+                    </span>
+                    <h1
+                        class="font-krona text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6"
+                    >
+                        About The <br class="hidden lg:block" /> Organization
+                    </h1>
+                    <p
+                        class="text-gray-300 text-sm md:text-base leading-relaxed max-w-lg mb-8"
+                    >
+                        We are the premier computer engineering student
+                        organization at Mapúa University. Dedicated to fostering
+                        innovation, academic excellence, and technical
+                        proficiency, we build the bridge between classroom
+                        theory and real-world application.
+                    </p>
+                    <div class="w-24 h-1 bg-[#3B82F6]"></div>
+                </div>
+
+                <!-- Right: Illustration -->
+                <div class="w-full md:w-1/2 relative">
+                    <!-- Decorative Background Glow -->
+                    <div
+                        class="absolute inset-0 bg-[#3B82F6] blur-[100px] opacity-20 rounded-full"
+                    >
+                    </div>
+
+                    <!-- Illustration Box -->
+                    <div
+                        class="relative bg-[#151922] border border-[#2d3748] aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden flex items-center justify-center p-6 group shadow-2xl shadow-black/50"
+                    >
+                        <!-- Inner stylized container -->
+                        <div
+                            class="w-full h-full border border-[#2d3748]/50 rounded-xl relative overflow-hidden bg-gradient-to-br from-[#1e293b] to-[#0f172a]"
+                        >
+                            <!-- SVG Dot Pattern Overlay -->
+                            <div
+                                class="absolute inset-0 opacity-30"
+                                style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiMzYjgyZjYiIG9wYWNpdHk9IjAuNSIvPjwvc3ZnPg==');"
+                            >
+                            </div>
+
+                            <!-- Center Floating Element -->
+                            <div
+                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-500 ease-out"
+                            >
+                                <svg
+                                    class="w-12 h-12 text-[#3B82F6]"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.5"
+                                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                                    ></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision & Mission (2-Column Grid) -->
+        <section
+            class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"
+        >
+            <!-- Vision: 2 Paragraphs -->
+            <div
+                id="vision"
+                class="bg-[#151922] border border-[#2d3748] p-10 hover:border-[#3B82F6] transition-colors duration-300 flex flex-col"
+            >
+                <h2
+                    class="font-krona text-2xl text-white mb-6 flex items-center gap-4"
+                >
+                    <svg
+                        class="w-8 h-8 text-[#3B82F6]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        ></path></svg
+                    >
+                    Vision
+                </h2>
+                <div
+                    class="text-gray-300 leading-relaxed text-sm md:text-base space-y-4 flex-grow"
+                >
+                    <p>
+                        The Institute of Computer Engineers of the Philippines -
+                        Student Edition, Mapúa University Chapter
+                        (Mapúa-ICpEP.SE) envisions itself as the premier
+                        academic and professional student organization for
+                        Computer Engineering students at Mapúa University,
+                        committed to developing competent, innovative, ethical,
+                        and socially responsible future computer engineers who
+                        contribute to the advancement of technology,
+                        engineering, and society.
+                    </p>
+                    <p>
+                        The Organization shall cultivate a collaborative
+                        community that promotes academic excellence, technical
+                        innovation, leadership, professional development, and
+                        service while preparing its members to become globally
+                        competitive Computer Engineering professionals.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Mission: 6 Items -->
+            <div
+                id="mission"
+                class="bg-[#151922] border border-[#2d3748] p-10 hover:border-[#3B82F6] transition-colors duration-300 flex flex-col"
+            >
+                <h2
+                    class="font-krona text-2xl text-white flex items-center gap-4"
+                >
+                    <svg
+                        class="w-8 h-8 text-[#3B82F6]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                        ></path></svg
+                    >
+                    Mission
+                </h2>
+                <p class="mb-6">To achieve its Vision, the Organization shall:</p>
+                <ul
+                    class="space-y-4 text-gray-300 text-sm md:text-base flex-grow"
+                >
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Promote academic
+                        excellence by providing programs, resources, and collaborative
+                        learning opportunities that enhance the academic performance
+                        of Computer Engineering students.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Develop the technical
+                        competence of its members through engineering projects, technical
+                        workshops, seminars, competitions, certifications, and other
+                        industry-relevant activities.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Cultivate leadership,
+                        professionalism, and organizational responsibility by empowering
+                        members to lead initiatives, manage projects, and actively
+                        participate in organizational affairs.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Foster collaboration,
+                        camaraderie, and student well-being through meaningful activities
+                        that strengthen teamwork, inclusivity, and holistic development.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Build and strengthen
+                        partnerships with the Institute of Computer Engineers of the
+                        Philippines Student Edition, Mapúa University, alumni, industry
+                        partners, professional organizations, and other academic institutions
+                        to advance the interests of the Computer Engineering community.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Uphold the principles
+                        of integrity, accountability, ethical conduct, and professional
+                        responsibility expected of Computer Engineering students and
+                        future engineers.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Objectives: 6 Items (Split into 2 columns) -->
+        <section id="objectives" class="max-w-7xl mx-auto px-6 mb-8">
+            <div
+                class="bg-[#151922] border border-[#2d3748] p-10 hover:border-[#3B82F6] transition-colors duration-300"
+            >
+                <h2
+                    class="font-krona text-2xl text-white text-center md:text-left"
+                >
+                    Objectives
+                </h2>
+                <p class="mb-8">
+                    In pursuit of its Mission, the Organization shall strive to:
+                </p>
+                <ul
+                    class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-gray-300 text-sm md:text-base"
+                >
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Provide academic
+                        assistance and learning opportunities that support the academic
+                        success of its members.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Organize technical,
+                        professional, and leadership development activities that strengthen
+                        the knowledge, competencies, and practical skills of Computer
+                        Engineering students.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Encourage active
+                        participation in programs, competitions, conferences, seminars,
+                        and initiatives organized by the National Organization, the
+                        University, partner organizations, and other institutions
+                        that contribute to the growth of its members.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Develop leadership,
+                        teamwork, discipline, and organizational involvement through
+                        committees, projects, and student-led initiatives.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Promote an organizational
+                        culture founded on professionalism, collaboration, innovation,
+                        continuous learning, and mutual respect.
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#3B82F6] mt-1">▹</span> Represent and protect
+                        the academic, professional, and general welfare of Computer
+                        Engineering students within and outside the University
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Core Values: 8 Items (Grid of 4 columns) -->
+        <section id="core-values" class="max-w-7xl mx-auto px-6 mb-24">
+            <div
+                class="bg-[#151922] border border-[#2d3748] p-10 hover:border-[#3B82F6] transition-colors duration-300"
+            >
+                <h2
+                    class="font-krona text-2xl text-white text-center md:text-left"
+                >
+                    Core Values
+                </h2>
+                <p class="mb-8">
+                    Every member of the Organization shall uphold the following
+                    Core Values, which shall serve as the guiding principles for
+                    all academic, organizational, professional, and personal
+                    endeavors.
+                </p>
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+                >
+                    <!-- Value 1 -->
+                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                        <h3
+                            class="font-bold text-white mb-2 text-sm font-krona"
+                        >
+                            Integrity
+                        </h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Members shall uphold honesty, transparency,
+                            accountability, and academic integrity in all their
+                            actions. They shall conduct themselves ethically and
+                            responsibly, recognizing that integrity is the
+                            foundation of the engineering profession.
+                        </p>
+                    </div>
+                    <!-- Value 2 -->
+                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                        <h3
+                            class="font-bold text-white mb-2 text-sm font-krona"
+                        >
+                            Commitment
+                        </h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Members shall faithfully perform their duties and
+                            responsibilities with dedication, discipline,
+                            reliability, and initiative, contributing
+                            meaningfully to the advancement of the Organization
+                            and its mission.
+                        </p>
+                    </div>
+                    <!-- Value 3 -->
+                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                        <h3
+                            class="font-bold text-white mb-2 text-sm font-krona"
+                        >
+                            Professionalism
+                        </h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Members shall demonstrate maturity, respect,
+                            competence, and accountability in their
+                            interactions, reflecting the values expected of
+                            Computer Engineering students and future engineering
+                            professionals.
+                        </p>
+                    </div>
+                    <!-- Value 4 -->
+                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                        <h3
+                            class="font-bold text-white mb-2 text-sm font-krona"
+                        >
+                            Innovation
+                        </h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Members shall cultivate creativity, curiosity, and
+                            critical thinking by embracing emerging
+                            technologies, developing practical engineering
+                            solutions, and continuously improving their
+                            technical knowledge and skills.
+                        </p>
+                    </div>
+                    <!-- Value 5 -->
+                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                        <h3
+                            class="font-bold text-white mb-2 text-sm font-krona"
+                        >
+                            Excellence
+                        </h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Members shall pursue the highest standards of
+                            academic achievement, technical competence,
+                            leadership, and organizational service through
+                            continuous learning and self-improvement.
+                        </p>
+                    </div>
+                    <!-- Value 6 -->
+                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                        <h3
+                            class="font-bold text-white mb-2 text-sm font-krona"
+                        >
+                            Collaboration
+                        </h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Members shall foster teamwork, inclusivity, open
+                            communication, and mutual respect, recognizing that
+                            successful engineering solutions are achieved
+                            through collective effort and shared expertise.
+                        </p>
+                    </div>
+                    <!-- Value 7 -->
+                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                        <h3
+                            class="font-bold text-white mb-2 text-sm font-krona"
+                        >
+                            Service
+                        </h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Members shall use their knowledge, leadership, and
+                            technical skills to serve the University, the
+                            Computer Engineering community, and society,
+                            embodying the engineer's responsibility to
+                            contribute to the common good.
+                        </p>
+                    </div>
+                    <!-- Value 8 -->
+                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                        <h3
+                            class="font-bold text-white mb-2 text-sm font-krona"
+                        >
+                            Ethical Responsibility
+                        </h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Members shall exercise sound judgment and adhere to
+                            the ethical standards of the engineering profession
+                            by ensuring that technology is developed and applied
+                            responsibly, securely, sustainably, and for the
+                            benefit of humanity
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section id="history" class="max-w-4xl mx-auto px-6 mb-24 text-center">
+            <h2 class="font-krona text-2xl md:text-3xl text-white mb-8">
+                Our History
+            </h2>
+            <div
+                class="bg-[#151922] border border-[#2d3748] p-8 md:p-12 text-left hover:border-[#3B82F6] transition-colors duration-300"
+            >
+                <p
+                    class="text-gray-300 leading-relaxed text-sm md:text-base mb-6"
+                >
+                    Established as the premier computer engineering student
+                    organization, we have consistently championed the
+                    integration of rigorous academic study with real-world
+                    technical application. From our early days organizing small
+                    study groups for microprocessor design to hosting
+                    university-wide tech summits, our legacy is built on the
+                    passion of generations of engineering students.
+                </p>
+                <p class="text-gray-300 leading-relaxed text-sm md:text-base">
+                    Today, we continue to serve as the vital link between the
+                    student body and the rapidly evolving tech industry,
+                    ensuring that our members are not just passive learners, but
+                    active creators and innovators in the digital landscape.
+                </p>
+            </div>
+        </section>
+
+        <!-- Officers Section -->
+        <section id="officers" class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="font-krona text-2xl md:text-3xl text-white">
+                    Executive Officers
+                </h2>
+                <p class="text-gray-400 mt-4 text-sm">
+                    The dedicated team leading the organization.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Officer Card 1 -->
+                <div
+                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
+                >
+                    <div
+                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-[#3B82F6]"
+                    >
+                    </div>
+                    <h3 class="text-white font-krona text-sm mb-1">Jane Doe</h3>
+                    <p
+                        class="text-[#3B82F6] text-xs font-semibold tracking-wide"
+                    >
+                        PRESIDENT
+                    </p>
+                </div>
+                <!-- Officer Card 2 -->
+                <div
+                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
+                >
+                    <div
+                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-gray-600"
+                    >
+                    </div>
+                    <h3 class="text-white font-krona text-sm mb-1">
+                        John Smith
+                    </h3>
+                    <p
+                        class="text-gray-400 text-xs font-semibold tracking-wide"
+                    >
+                        VICE PRESIDENT
+                    </p>
+                </div>
+                <!-- Officer Card 3 -->
+                <div
+                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
+                >
+                    <div
+                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-gray-600"
+                    >
+                    </div>
+                    <h3 class="text-white font-krona text-sm mb-1">
+                        Alex Johnson
+                    </h3>
+                    <p
+                        class="text-gray-400 text-xs font-semibold tracking-wide"
+                    >
+                        SECRETARY
+                    </p>
+                </div>
+                <!-- Officer Card 4 -->
+                <div
+                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
+                >
+                    <div
+                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-gray-600"
+                    >
+                    </div>
+                    <h3 class="text-white font-krona text-sm mb-1">
+                        Sam Rivera
+                    </h3>
+                    <p
+                        class="text-gray-400 text-xs font-semibold tracking-wide"
+                    >
+                        TREASURER
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>

@@ -1,0 +1,47 @@
+---
+import "../styles/global.css";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title}</title>
+        <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Krona+One&family=SUSE:wght@100..900&display=swap"
+            rel="stylesheet"
+        /> -->
+    </head>
+    <body
+        class="bg-[#0B0C10] text-white min-h-screen flex flex-col font-suse dot-grid"
+    >
+        <slot />
+    </body>
+</html>
+
+<style is:global>
+    :root {
+        --font-krona: "Krona One", sans-serif;
+        --font-suse: "SUSE", sans-serif;
+    }
+    .font-krona {
+        font-family: var(--font-krona);
+    }
+    .font-suse {
+        font-family: var(--font-suse);
+    }
+
+    .dot-grid {
+        background-image: radial-gradient(#1e293b 1px, transparent 1px);
+        background-size: 24px 24px;
+    }
+</style>

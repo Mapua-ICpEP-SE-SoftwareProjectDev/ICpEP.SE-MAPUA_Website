@@ -1,0 +1,85 @@
+---
+import { getCollection } from "astro:content";
+import FilterPageLayout from "../layouts/FilterPageLayout.astro";
+
+const resources = await getCollection("database");
+const sortedResources = resources.sort((a, b) => {
+    // Fallback to 0 if the date is accidentally missing
+    const dateA = a.data.date ? a.data.date.valueOf() : 0;
+    const dateB = b.data.date ? b.data.date.valueOf() : 0;
+    return dateB - dateA;
+});
+
+const databaseFilters = [
+    { label: "All Courses", value: "all" },
+    { label: "CPE101", value: "CPE101" },
+    { label: "CPE120", value: "CPE120" },
+    { label: "CPE117", value: "CPE117" },
+    { label: "CPE200-1L", value: "CPE200-1L" },
+    { label: "CPE120-1D", value: "CPE120-1D" },
+];
+---
+
+<FilterPageLayout
+    pageTitle="Database | ICpEP Mapua"
+    headerTag="Resource Library"
+    headerTitle="Course Database"
+    filterLabel="Filter by Course Code:"
+    filterOptions={databaseFilters}
+>
+    {
+        sortedResources.map((res) => (
+            <article
+                class="filterable-item bg-[#151922] border border-[#2d3748] flex flex-col p-6 hover:border-[#3B82F6] transition-all duration-300"
+                data-title={res.data.title.toLowerCase()}
+                data-tags={JSON.stringify([res.data.course])}
+            >
+                <div class="flex items-center justify-between mb-4">
+                    <span class="bg-[#2d3748] text-[#3B82F6] text-xs px-2 py-1 font-semibold tracking-wider uppercase">
+                        {res.data.course}
+                    </span>
+                    <span class="text-xs text-gray-500 font-mono ml-4 text-right">
+                        {res.data.date
+                            ? res.data.date.toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                              })
+                            : "TBA"}
+                    </span>
+                </div>
+
+                <h2 class="font-krona text-lg text-white mb-3">
+                    {res.data.title}
+                </h2>
+                <div class="text-xs text-gray-400 font-mono mb-2">
+                    By {res.data.author && res.data.author.length > 0 ? res.data.author.join(', ') : 'ICpEP Admin'}
+                </div>
+
+                <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
+                    {res.data.description}
+                </p>
+
+                <a
+                    href={`/database/${res.id}`}
+                    class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-[#3B82F6] transition-colors mt-auto w-max"
+                >
+                    Read More
+                    <svg
+                        class="w-4 h-4 transition-transform group-hover:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                    </svg>
+                </a>
+            </article>
+        ))
+    }
+</FilterPageLayout>

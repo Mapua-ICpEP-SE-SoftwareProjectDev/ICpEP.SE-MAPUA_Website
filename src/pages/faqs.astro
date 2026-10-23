@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import FAQAccordion from "../components/FAQAccordion.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="FAQs | Help & Support">
+    <Navbar />
+
+    <main class="flex-grow pt-12 pb-24">
+        <!-- FAQ Accordion Component -->
+        <div class="mt-8">
+            <FAQAccordion />
+        </div>
+    </main>
+
+    <Footer />
+</Layout>

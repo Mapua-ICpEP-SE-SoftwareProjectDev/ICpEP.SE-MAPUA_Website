@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import ComingSoon from "../components/ComingSoon.astro";
+---
+
+<Layout title="Merch | ICpEP Mapua">
+    <Navbar />
+
+    <main class="flex-grow pt-24 pb-24">
+        <!-- 
+      You can pass custom props here. 
+      If you leave them blank, it defaults to "This feature is Coming Soon" 
+    -->
+        <ComingSoon
+            pageName="Official Merchandise"
+            message="We are currently designing the new batch of ICpEP Mapua shirts and lanyards. The store will open shortly."
+        />
+    </main>
+
+    <Footer />
+</Layout>

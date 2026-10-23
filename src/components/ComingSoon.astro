@@ -1,0 +1,82 @@
+---
+interface Props {
+    pageName?: string;
+    message?: string;
+}
+
+const {
+    pageName = "This feature",
+    message = "We are currently engineering this section. Check back soon for updates.",
+} = Astro.props;
+---
+
+<div
+    class="flex flex-col items-center justify-center min-h-[60vh] px-6 relative py-20"
+>
+    <!-- Subtle Background Glow -->
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#3B82F6] blur-[120px] opacity-10 rounded-full pointer-events-none"
+    >
+    </div>
+
+    <!-- Content Card -->
+    <div
+        class="relative z-10 bg-[#151922] border border-[#2d3748] p-10 md:p-16 flex flex-col items-center max-w-2xl w-full text-center hover:border-[#3B82F6] transition-colors duration-500 shadow-2xl shadow-black/50"
+    >
+        <!-- Spinning Gear Icon -->
+        <div
+            class="w-20 h-20 bg-[#1e293b] border border-[#2d3748] rounded-xl flex items-center justify-center mb-8 relative overflow-hidden group"
+        >
+            <div class="absolute inset-0 bg-[#3B82F6]/10"></div>
+            <svg
+                class="w-10 h-10 text-[#3B82F6] animate-[spin_4s_linear_infinite]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                ></path>
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+        </div>
+
+        <!-- Typography -->
+        <span
+            class="text-[#3B82F6] text-xs font-mono uppercase tracking-widest font-semibold mb-4 block"
+        >
+            Work In Progress
+        </span>
+        <h1 class="font-krona text-2xl md:text-3xl text-white mb-4">
+            {pageName} is Coming Soon
+        </h1>
+        <p
+            class="text-gray-400 text-sm md:text-base leading-relaxed mb-8 max-w-md"
+        >
+            {message}
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <button
+                onclick="history.back()"
+                class="border border-[#2d3748] text-gray-300 px-6 py-2.5 text-sm font-semibold hover:border-white hover:text-white transition-colors"
+            >
+                Go Back
+            </button>
+            <a
+                href="/"
+                class="bg-[#3B82F6] text-white px-6 py-2.5 text-sm font-semibold hover:bg-blue-600 transition-colors"
+            >
+                Return Home
+            </a>
+        </div>
+    </div>
+</div>

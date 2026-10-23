@@ -1,0 +1,44 @@
+/* 1. Import your custom Google Fonts FIRST */
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=SUSE:wght@100..900&display=swap');
+
+/* 2. Import Tailwind CSS v4 SECOND */
+@import "tailwindcss";
+
+/* 3. Configure your custom Tailwind theme variables */
+@theme {
+    /* Naming these variables --font-* automatically creates utility classes like `font-krona` */
+    --font-krona: "Krona One", sans-serif;
+    --font-suse: "SUSE", sans-serif;
+
+    /* Optional: Standardizing your brand colors for easy utility usage (e.g., bg-icpep-card) */
+    --color-icpep-dark: #121212;
+    --color-icpep-card: #151922;
+    --color-icpep-blue: #3b82f6;
+    --color-icpep-accent: #38bdf8;
+}
+
+/* 4. Apply global base styles */
+@layer base {
+    html {
+        /* Set SUSE as the default font for the entire site */
+        font-family: var(--font-suse);
+        /* Your preferred high-contrast dark background */
+        background-color: var(--color-icpep-dark);
+        color: #e5e7eb; /* text-gray-200 */
+    }
+
+    body {
+        /* The blueprint grid background design */
+        background-image:
+            linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+            linear-gradient(
+                90deg,
+                rgba(59, 130, 246, 0.05) 1px,
+                transparent 1px
+            );
+        background-size: 40px 40px;
+        background-position: center top;
+        min-height: 100vh;
+        margin: 0;
+    }
+}

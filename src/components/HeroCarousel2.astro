@@ -1,0 +1,126 @@
+<section class="max-w-[1200px] mx-auto px-6 mb-32">
+    <div
+        class="border border-brand-border flex flex-col lg:flex-row h-auto lg:h-[500px] bg-brand-panel/80 shadow-2xl overflow-hidden relative"
+    >
+        <!-- Carousel Image (Left) -->
+        <div
+            class="w-full lg:w-[60%] h-[300px] lg:h-full relative border-b lg:border-b-0 lg:border-r border-brand-border bg-[#2a2d34]"
+        >
+            <!-- Placeholder Image (using a neutral dark architectural placeholder) -->
+            <img
+                id="carousel-img"
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
+                alt="Carousel Feature"
+                class="w-full h-full object-cover opacity-60 fade-transition mix-blend-luminosity"
+            />
+            <!-- Overlay gradient for better text blending if needed -->
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-transparent to-brand-panel/30"
+            >
+            </div>
+        </div>
+
+        <!-- Carousel Content & Controls (Right) -->
+        <div
+            class="w-full lg:w-[40%] flex flex-col h-full bg-brand-panel relative z-10"
+        >
+            <!-- Content Area -->
+            <div
+                class="flex-grow p-8 lg:p-10 flex flex-col justify-center fade-transition"
+                id="carousel-content"
+            >
+                <!-- Tags -->
+                <div class="flex gap-2 mb-6" id="carousel-tags">
+                    <span
+                        class="px-3 py-1 bg-brand-border/60 text-xs font-bold tracking-wider text-brand-blue"
+                        >TAG 1</span
+                    >
+                    <span
+                        class="px-3 py-1 bg-brand-border/60 text-xs font-bold tracking-wider text-brand-blue"
+                        >TAG 2</span
+                    >
+                </div>
+                <!-- Title -->
+                <h2
+                    id="carousel-title"
+                    class="font-krona text-3xl lg:text-4xl mb-4 leading-tight"
+                >
+                    Title Here
+                </h2>
+                <!-- Description -->
+                <p
+                    id="carousel-desc"
+                    class="font-suse text-brand-textMuted leading-relaxed"
+                >
+                    Description Here... Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit. Integer in accumsan nisl. Quisque id
+                    iaculis enim. Aenean consequat posuere purus, a porttitor
+                    metus luctus a. Phasellus eget metus eu dui maximus
+                    volutpat. Sed ut sagittis odio
+                </p>
+            </div>
+
+            <!-- Controls Area (Bottom) -->
+            <div
+                class="h-[140px] flex flex-col border-t border-brand-border mt-auto"
+            >
+                <!-- Arrows -->
+                <div class="flex h-[85px] border-b border-brand-border">
+                    <button
+                        id="btn-prev"
+                        class="w-1/2 flex items-center justify-center border-r border-brand-border hover:bg-white/5 transition-colors group"
+                    >
+                        <svg
+                            class="w-10 h-10 text-white group-hover:-translate-x-1 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 19l-7-7 7-7"></path></svg
+                        >
+                    </button>
+                    <button
+                        id="btn-next"
+                        class="w-1/2 flex items-center justify-center hover:bg-white/5 transition-colors group"
+                    >
+                        <svg
+                            class="w-10 h-10 text-white group-hover:translate-x-1 transition-transform"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"></path></svg
+                        >
+                    </button>
+                </div>
+                <!-- Pagination Indicators -->
+                <div
+                    class="h-[55px] flex items-center justify-center gap-6"
+                    id="carousel-indicators"
+                >
+                    <button
+                        class="w-3.5 h-3.5 border border-white bg-brand-blue border-brand-blue transition-colors"
+                        data-index="0"></button>
+                    <button
+                        class="w-3.5 h-3.5 border border-white hover:border-brand-blue transition-colors"
+                        data-index="1"></button>
+                    <button
+                        class="w-3.5 h-3.5 border border-white hover:border-brand-blue transition-colors"
+                        data-index="2"></button>
+                    <button
+                        class="w-3.5 h-3.5 border border-white hover:border-brand-blue transition-colors"
+                        data-index="3"></button>
+                    <button
+                        class="w-3.5 h-3.5 border border-white hover:border-brand-blue transition-colors"
+                        data-index="4"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

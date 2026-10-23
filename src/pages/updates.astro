@@ -1,0 +1,95 @@
+---
+import { getCollection } from "astro:content";
+import FilterPageLayout from "../layouts/FilterPageLayout.astro";
+
+const posts = await getCollection("updates");
+const sortedPosts = posts.sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+// Define the dropdown options specifically for the updates page
+const updateFilters = [
+    { label: "All Categories", value: "all" },
+    { label: "Events", value: "Events" },
+    { label: "Blogs", value: "Blogs" },
+    { label: "Showcases", value: "Showcases" },
+    { label: "News", value: "News" },
+];
+---
+
+<FilterPageLayout
+    pageTitle="Updates | ICpEP Mapua"
+    headerTag="Stay Informed"
+    headerTitle="Latest Updates"
+    filterLabel="Filter by category:"
+    filterOptions={updateFilters}
+>
+    {
+        sortedPosts.map((post) => (
+            <article
+                class="filterable-item bg-[#151922] border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-[#3B82F6] transition-all duration-300"
+                data-title={post.data.title.toLowerCase()}
+                data-tags={JSON.stringify(post.data.tags)}
+            >
+                <div class="w-full h-48 overflow-hidden relative">
+                    <div
+                        class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        style={`background-image: url('${post.data.image}');`}
+                    />
+                </div>
+
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex flex-wrap gap-2">
+                            {post.data.tags.map((tag) => (
+                                <span class="bg-[#2d3748] text-[#3B82F6] text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                        <span class="text-xs text-gray-500 font-mono ml-4 text-right">
+                            {post.data.date
+                                ? post.data.date.toLocaleDateString("en-US", {
+                                      year: "numeric",
+                                      month: "short",
+                                      day: "numeric",
+                                  })
+                                : "TBA"}
+                        </span>
+                    </div>
+
+                    <h2 class="font-krona text-lg text-white mb-3 group-hover:text-[#3B82F6] transition-colors line-clamp-2">
+                        {post.data.title}
+                    </h2>
+                    <div class="text-xs text-gray-400 font-mono mb-2">
+                        By {post.data.author && post.data.author.length > 0 ? post.data.author.join(', ') : 'ICpEP Admin'}
+                    </div>
+
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
+                        {post.data.excerpt}
+                    </p>
+
+                    <a
+                        href={`/updates/${post.id}`}
+                        class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-[#3B82F6] transition-colors mt-auto w-max"
+                    >
+                        Read More
+                        <svg
+                            class="w-4 h-4 transition-transform group-hover:translate-x-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"
+                            />
+                        </svg>
+                    </a>
+                </div>
+            </article>
+        ))
+    }
+</FilterPageLayout>
