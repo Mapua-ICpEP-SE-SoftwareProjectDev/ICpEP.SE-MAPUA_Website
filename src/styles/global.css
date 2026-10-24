@@ -1,5 +1,5 @@
 /* 1. Import your custom Google Fonts FIRST */
-@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=SUSE:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Krona+One&family=SUSE:wght@100..900&display=swap");
 
 /* 2. Import Tailwind CSS v4 SECOND */
 @import "tailwindcss";
@@ -40,5 +40,66 @@
         background-position: center top;
         min-height: 100vh;
         margin: 0;
+    }
+}
+
+@layer components {
+    /* =========================================
+    HEADINGS (Krona One)
+     ========================================= */
+
+    .text-page-title {
+        font-family: var(--font-krona);
+        @apply text-3xl md:text-5xl text-white leading-tight;
+    }
+
+    .text-section-heading {
+        font-family: var(--font-krona);
+        @apply text-2xl md:text-3xl text-white mb-6 mt-12;
+    }
+
+    .text-sub-heading {
+        font-family: var(--font-krona);
+        @apply text-xl md:text-2xl text-white;
+    }
+
+    .text-card-title {
+        font-family: var(--font-krona);
+        @apply text-lg text-white mb-3;
+    }
+
+    /* =========================================
+    BODY TEXT (SUSE)
+     ========================================= */
+
+    .text-body-primary {
+        font-family: var(--font-suse);
+        @apply text-base md:text-lg text-gray-300 leading-relaxed;
+    }
+
+    .text-body-secondary {
+        font-family: var(--font-suse);
+        @apply text-sm md:text-base text-gray-400 leading-relaxed;
+    }
+
+    /* =========================================
+    MICROCOPY & UI
+     ========================================= */
+
+    .text-nav-button {
+        font-family: var(--font-suse);
+        @apply text-sm font-semibold;
+    }
+
+    .text-meta {
+        @apply text-xs md:text-sm text-gray-500 font-mono;
+    }
+
+    .text-badge {
+        @apply text-[10px] md:text-xs font-semibold tracking-wider uppercase px-3 py-1 text-blue-200;
+    }
+
+    .text-supertitle {
+        @apply text-xs font-mono uppercase tracking-widest font-semibold text-[#3B82F6] mb-2 block;
     }
 }

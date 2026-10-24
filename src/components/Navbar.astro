@@ -1,5 +1,14 @@
 ---
+import JoinModal from "../components/JoinModal.astro";
 
+const currentPath = Astro.url.pathname;
+
+// Helper function to check if the current URL starts with the link path
+// This ensures that navigating to "/updates/assembly" still highlights the "Updates" nav item.
+function isActive(path: string) {
+    if (path === "/") return currentPath === "/";
+    return currentPath.startsWith(path);
+}
 ---
 
 <header
@@ -19,8 +28,8 @@
                 <!-- About Dropdown -->
                 <div class="group h-full flex items-center cursor-pointer">
                     <a
-                        href="about"
-                        class="text-sm hover:text-[#3B82F6] transition-colors flex items-center gap-1"
+                        href="/about"
+                        class={`text-sm transition-colors flex items-center gap-1 ${isActive("/about") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
                     >
                         About
                         <svg
@@ -35,28 +44,37 @@
                                 d="M19 9l-7 7-7-7"></path></svg
                         >
                     </a>
-                    <!-- Full-width Dropdown Container -->
                     <div
                         class="absolute left-0 top-full w-full bg-[#0B0C10] border-b border-[#2d3748] hidden group-hover:block shadow-xl"
                     >
                         <div
-                            class="max-w-7xl mx-auto px-6 py-8 flex gap-24 ml-[88px] text-sm text-gray-300"
+                            class="max-w-7xl mx-auto px-6 py-8 flex gap-24 ml-[200px] text-sm text-gray-300"
                         >
                             <div class="flex flex-col gap-4">
-                                <a href="#" class="hover:text-white">Vision</a>
-                                <a href="#" class="hover:text-white">Mission</a>
-                                <a href="#" class="hover:text-white"
-                                    >Objectives</a
+                                <a href="/about/vision" class="hover:text-white"
+                                    >Vision</a
                                 >
-                                <a href="#" class="hover:text-white"
-                                    >Core Values</a
+                                <a
+                                    href="/about/mission"
+                                    class="hover:text-white">Mission</a
                                 >
-                                <a href="#" class="hover:text-white">Sample 1</a
+                                <a
+                                    href="/about/objectives"
+                                    class="hover:text-white">Objectives</a
+                                >
+                                <a
+                                    href="/about/core-values"
+                                    class="hover:text-white">Core Values</a
                                 >
                             </div>
                             <div class="flex flex-col gap-4">
-                                <a href="#" class="hover:text-white">History</a>
-                                <a href="#" class="hover:text-white">Officers</a
+                                <a
+                                    href="/about/history"
+                                    class="hover:text-white">History</a
+                                >
+                                <a
+                                    href="/about/officers"
+                                    class="hover:text-white">Officers</a
                                 >
                             </div>
                         </div>
@@ -66,8 +84,8 @@
                 <!-- Updates Dropdown -->
                 <div class="group h-full flex items-center cursor-pointer">
                     <a
-                        href="updates"
-                        class="text-sm hover:text-[#3B82F6] transition-colors flex items-center gap-1"
+                        href="/updates"
+                        class={`text-sm transition-colors flex items-center gap-1 ${isActive("/updates") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
                     >
                         Updates
                         <svg
@@ -86,23 +104,23 @@
                         class="absolute left-0 top-full w-full bg-[#0B0C10] border-b border-[#2d3748] hidden group-hover:block shadow-xl"
                     >
                         <div
-                            class="max-w-7xl mx-auto px-6 py-8 flex gap-24 ml-[180px] text-sm text-gray-300"
+                            class="max-w-7xl mx-auto px-6 py-8 flex gap-24 ml-[200px] text-sm text-gray-300"
                         >
                             <div class="flex flex-col gap-4">
                                 <a
-                                    href="updates?category=Events"
+                                    href="/updates?category=Events"
                                     class="hover:text-white">Events</a
                                 >
                                 <a
-                                    href="updates?category=Blogs"
+                                    href="/updates?category=Blogs"
                                     class="hover:text-white">Blogs</a
                                 >
                                 <a
-                                    href="updates?category=Showcases"
+                                    href="/updates?category=Showcases"
                                     class="hover:text-white">Showcases</a
                                 >
                                 <a
-                                    href="updates?category=News"
+                                    href="/updates?category=News"
                                     class="hover:text-white">News</a
                                 >
                             </div>
@@ -113,8 +131,8 @@
                 <!-- Database Dropdown -->
                 <div class="group h-full flex items-center cursor-pointer">
                     <a
-                        href="database"
-                        class="text-sm hover:text-[#3B82F6] transition-colors flex items-center gap-1"
+                        href="/database"
+                        class={`text-sm transition-colors flex items-center gap-1 ${isActive("/database") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
                     >
                         Database
                         <svg
@@ -133,17 +151,28 @@
                         class="absolute left-0 top-full w-full bg-[#0B0C10] border-b border-[#2d3748] hidden group-hover:block shadow-xl"
                     >
                         <div
-                            class="max-w-7xl mx-auto px-6 py-8 flex gap-24 ml-[280px] text-sm text-gray-300"
+                            class="max-w-7xl mx-auto px-6 py-8 flex gap-24 ml-[200px] text-sm text-gray-300"
                         >
                             <div class="flex flex-col gap-4">
-                                <a href="database?category=CPE101" class="hover:text-white">CPE101</a>
-                                <a href="database?category=CPE120" class="hover:text-white">CPE120</a>
-                                <a href="database?category=CPE117" class="hover:text-white">CPE117</a>
-                                <a href="database?category=CPE200-1L" class="hover:text-white"
-                                    >CPE200-1L</a
+                                <a
+                                    href="/database?category=CPE101"
+                                    class="hover:text-white">CPE101</a
                                 >
-                                <a href="database?category=CPE120-1D" class="hover:text-white"
-                                    >CPE120-1D</a
+                                <a
+                                    href="/database?category=CPE120"
+                                    class="hover:text-white">CPE120</a
+                                >
+                                <a
+                                    href="/database?category=CPE117"
+                                    class="hover:text-white">CPE117</a
+                                >
+                                <a
+                                    href="/database?category=CPE200-1L"
+                                    class="hover:text-white">CPE200-1L</a
+                                >
+                                <a
+                                    href="/database?category=CPE120-1D"
+                                    class="hover:text-white">CPE120-1D</a
                                 >
                             </div>
                         </div>
@@ -151,13 +180,14 @@
                 </div>
 
                 <a
-                    href="merch"
-                    class="text-sm hover:text-[#3B82F6] transition-colors"
+                    href="/merch"
+                    class={`text-sm transition-colors ${isActive("/merch") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
                     >Merch</a
                 >
+
                 <a
-                    href="faqs"
-                    class="text-sm hover:text-[#3B82F6] transition-colors"
+                    href="/faqs"
+                    class={`text-sm transition-colors ${isActive("/faqs") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
                     >FAQs</a
                 >
             </nav>
@@ -166,15 +196,17 @@
         <!-- Right Side: Action Buttons -->
         <div class="flex items-center gap-4">
             <a
-                href="#"
+                href="/contact"
                 class="border border-white px-5 py-2 text-sm font-medium hover:bg-white hover:text-black transition-colors"
                 >Contact</a
             >
-            <a
-                href="#"
+            <button
+                id="join-btn"
                 class="bg-white text-black px-5 py-2 text-sm font-medium hover:bg-gray-200 transition-colors"
-                >Join Us</a
+                >Join Us</button
             >
         </div>
     </div>
+
+    <JoinModal isMemberClosed={false} isOfficerClosed={false} />
 </header>

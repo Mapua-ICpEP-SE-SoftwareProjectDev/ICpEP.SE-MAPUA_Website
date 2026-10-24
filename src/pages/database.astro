@@ -22,8 +22,7 @@ const databaseFilters = [
 
 <FilterPageLayout
     pageTitle="Database | ICpEP Mapua"
-    headerTag="Resource Library"
-    headerTitle="Course Database"
+    headerTitle="Research Database"
     filterLabel="Filter by Course Code:"
     filterOptions={databaseFilters}
 >
@@ -49,14 +48,14 @@ const databaseFilters = [
                     </span>
                 </div>
 
-                <h2 class="font-krona text-lg text-white mb-3">
+                <h2 class="text-card-title">
                     {res.data.title}
                 </h2>
                 <div class="text-xs text-gray-400 font-mono mb-2">
                     By {res.data.author && res.data.author.length > 0 ? res.data.author.join(', ') : 'ICpEP Admin'}
                 </div>
 
-                <p class="text-gray-400 text-sm leading-relaxed mb-6 flex-grow">
+                <p class="text-body-secondary mb-6 flex-grow">
                     {res.data.description}
                 </p>
 

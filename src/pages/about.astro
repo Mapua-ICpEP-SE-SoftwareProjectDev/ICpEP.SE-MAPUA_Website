@@ -17,11 +17,6 @@ import Footer from "../components/Footer.astro";
                 <div
                     class="w-full md:w-1/2 flex flex-col items-start text-left"
                 >
-                    <span
-                        class="text-[#3B82F6] text-xs font-mono uppercase tracking-widest font-semibold mb-4 block"
-                    >
-                        Who We Are
-                    </span>
                     <h1
                         class="font-krona text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6"
                     >
@@ -47,39 +42,24 @@ import Footer from "../components/Footer.astro";
                     >
                     </div>
 
-                    <!-- Illustration Box -->
+                    <!-- Image Container -->
                     <div
-                        class="relative bg-[#151922] border border-[#2d3748] aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden flex items-center justify-center p-6 group shadow-2xl shadow-black/50"
+                        class="w-full h-[320px] lg:h-[420px] border border-[#2d3748] relative overflow-hidden group bg-[#151922] rounded-xl"
                     >
-                        <!-- Inner stylized container -->
-                        <div
-                            class="w-full h-full border border-[#2d3748]/50 rounded-xl relative overflow-hidden bg-gradient-to-br from-[#1e293b] to-[#0f172a]"
-                        >
-                            <!-- SVG Dot Pattern Overlay -->
-                            <div
-                                class="absolute inset-0 opacity-30"
-                                style="background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiMzYjgyZjYiIG9wYWNpdHk9IjAuNSIvPjwvc3ZnPg==');"
-                            >
-                            </div>
+                        <!-- 
+                            Replace the src with your actual image path. 
+                            If the image is in your public folder, use src="/your-image-name.jpg" 
+                        -->
+                        <img
+                            src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1200&auto=format&fit=crop"
+                            alt="ICpEP Mapua Engineering Team"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
 
-                            <!-- Center Floating Element -->
-                            <div
-                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-500 ease-out"
-                            >
-                                <svg
-                                    class="w-12 h-12 text-[#3B82F6]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="1.5"
-                                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                                    ></path>
-                                </svg>
-                            </div>
+                        <!-- Subtle blue overlay to blend the image into the dark theme -->
+                        <div
+                            class="absolute inset-0 bg-[#3B82F6]/10 pointer-events-none mix-blend-overlay"
+                        >
                         </div>
                     </div>
                 </div>
@@ -162,7 +142,9 @@ import Footer from "../components/Footer.astro";
                     >
                     Mission
                 </h2>
-                <p class="mb-6">To achieve its Vision, the Organization shall:</p>
+                <p class="mb-6">
+                    To achieve its Vision, the Organization shall:
+                </p>
                 <ul
                     class="space-y-4 text-gray-300 text-sm md:text-base flex-grow"
                 >

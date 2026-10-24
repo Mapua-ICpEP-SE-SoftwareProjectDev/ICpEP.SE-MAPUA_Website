@@ -9,8 +9,15 @@ import Footer from "../components/Footer.astro";
     <Navbar />
 
     <main class="flex-grow pt-12 pb-24">
+        <header class="max-w-7xl mx-auto px-6 pt-16 mb-12 text-center md:text-left">
+            <h2 class="font-krona text-4xl md:text-5xl text-white">
+                Frequently Asked Questions
+            </h2>
+            <div class="w-24 h-1 bg-[#3B82F6] mx-auto md:mx-0 mt-6"></div>
+        </header>
+
         <!-- FAQ Accordion Component -->
-        <div class="mt-8">
+        <div class="max-w-7xl mx-auto px-6 mt-8">
             <FAQAccordion />
         </div>
     </main>

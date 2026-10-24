@@ -1,12 +1,26 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 
-const allUpdates = await getCollection("updates");
-const latestUpdates = allUpdates
-    .sort((a: CollectionEntry<'updates'>, b: CollectionEntry<'updates'>) => b.data.date.valueOf() - a.data.date.valueOf())
-    .slice(0, 5);
+export interface Props {
+    // Optional prop to override the default latest posts fetch
+    posts?: CollectionEntry<'updates'>[];
+}
 
-const carouselSlides = latestUpdates.map((post: CollectionEntry<'updates'>) => ({
+const { posts } = Astro.props;
+
+let selectedPosts: CollectionEntry<'updates'>[] = [];
+
+// Apply maximum limit of 5 posts to either the prop override or the default fetch
+if (posts && posts.length > 0) {
+    selectedPosts = posts.slice(0, 5);
+} else {
+    const allUpdates = await getCollection("updates");
+    selectedPosts = allUpdates
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+        .slice(0, 5);
+}
+
+const carouselSlides = selectedPosts.map((post) => ({
     image: `url('${post.data.image}')`,
     tags: post.data.tags,
     title: post.data.title,
@@ -16,17 +30,18 @@ const carouselSlides = latestUpdates.map((post: CollectionEntry<'updates'>) => (
 const initialSlide = carouselSlides[0];
 ---
 
-<!-- Pass the JSON data into a data-attribute on the main container -->
 <section
     id="hero-carousel"
     data-slides={JSON.stringify(carouselSlides)}
-    class="max-w-[1400px] mx-auto px-6 pt-12"
+    class="max-w-[1400px] mx-auto px-6 pt-16"
 >
+    <!-- Locked height prevents scrolling/shifting from variable text length -->
     <div
-        class="border border-[#1e40af] flex flex-col lg:flex-row bg-[#151922]/80 backdrop-blur-sm min-h-[500px]"
+        class="border border-[#1e40af] flex flex-col lg:flex-row bg-[#151922]/80 backdrop-blur-sm h-[730px] lg:h-[580px] overflow-hidden"
     >
+        <!-- Explicit height on mobile prevents the image from collapsing -->
         <div
-            class="lg:w-2/3 bg-gradient-to-br from-gray-700 to-gray-900 relative"
+            class="h-[305px] lg:h-full lg:w-19/30 bg-gradient-to-br from-gray-700 to-gray-900 relative shrink-0"
         >
             <div
                 id="carousel-bg"
@@ -36,39 +51,40 @@ const initialSlide = carouselSlides[0];
             </div>
         </div>
 
-        <div class="lg:w-1/3 flex flex-col border-l border-[#1e40af]">
-            <div class="p-10 flex-grow">
-                <div id="carousel-tags" class="flex flex-wrap gap-2 mb-6">
+        <div class="flex-grow lg:w-11/30 flex flex-col border-t lg:border-t-0 lg:border-l border-[#1e40af]">
+            <div class="p-8 lg:p-10 flex-grow overflow-hidden flex flex-col justify-center">
+                <div id="carousel-tags" class="flex flex-wrap gap-2 mb-4 lg:mb-6">
                     {
                         initialSlide?.tags.map((tag: string) => (
-                            <span class="bg-[#2d3748] text-xs px-3 py-1 font-semibold text-blue-200 uppercase">
+                            <span class="text-badge bg-[#2d3748]">
                                 {tag}
                             </span>
                         ))
                     }
                 </div>
+                <!-- Line clamp restricts text lines to fit the fixed height -->
                 <h1
                     id="carousel-title"
-                    class="font-krona text-2xl lg:text-3xl mb-4 transition-opacity duration-300"
+                    class="text-section-heading mt-0 mb-3 lg:mb-4 transition-opacity duration-300 line-clamp-4"
                 >
                     {initialSlide?.title}
                 </h1>
                 <p
                     id="carousel-desc"
-                    class="text-gray-300 text-sm leading-relaxed transition-opacity duration-300"
+                    class="text-body-primary transition-opacity duration-300 line-clamp-3 lg:line-clamp-5"
                 >
                     {initialSlide?.description}
                 </p>
             </div>
 
-            <div class="border-t border-[#1e40af]">
-                <div class="flex h-24 border-b border-[#1e40af]">
+            <div class="border-t border-[#1e40af] shrink-0">
+                <div class="flex h-20 lg:h-24 border-b border-[#1e40af]">
                     <button
                         id="btn-prev"
                         class="w-1/2 flex items-center justify-center hover:bg-[#1e293b] transition-colors border-r border-[#1e40af]"
                     >
                         <svg
-                            class="w-12 h-12 text-white"
+                            class="w-10 h-10 lg:w-12 lg:h-12 text-white"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -84,7 +100,7 @@ const initialSlide = carouselSlides[0];
                         class="w-1/2 flex items-center justify-center hover:bg-[#1e293b] transition-colors"
                     >
                         <svg
-                            class="w-12 h-12 text-white"
+                            class="w-10 h-10 lg:w-12 lg:h-12 text-white"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -98,7 +114,7 @@ const initialSlide = carouselSlides[0];
                 </div>
 
                 <div
-                    class="h-12 flex items-center justify-center gap-6"
+                    class="h-10 lg:h-12 flex items-center justify-center gap-6"
                     id="carousel-indicators"
                 >
                     {
@@ -115,9 +131,7 @@ const initialSlide = carouselSlides[0];
     </div>
 </section>
 
-<!-- Standard script tag (no define:vars) allows full TypeScript inference -->
 <script>
-    // 1. Define the interface for strict typing
     interface Slide {
         image: string;
         tags: string[];
@@ -125,7 +139,6 @@ const initialSlide = carouselSlides[0];
         description: string;
     }
 
-    // 2. Safely grab the container and extract the data payload
     const carouselContainer = document.getElementById("hero-carousel");
 
     if (carouselContainer) {
@@ -135,30 +148,17 @@ const initialSlide = carouselSlides[0];
             : [];
 
         let currentIndex: number = 0;
+        let autoPlayInterval: number;
 
-        // 3. Strongly type all DOM elements
         const bgEl = document.getElementById("carousel-bg") as HTMLDivElement;
-        const tagsEl = document.getElementById(
-            "carousel-tags",
-        ) as HTMLDivElement;
-        const titleEl = document.getElementById(
-            "carousel-title",
-        ) as HTMLHeadingElement;
-        const descEl = document.getElementById(
-            "carousel-desc",
-        ) as HTMLParagraphElement;
-        const prevBtn = document.getElementById(
-            "btn-prev",
-        ) as HTMLButtonElement;
-        const nextBtn = document.getElementById(
-            "btn-next",
-        ) as HTMLButtonElement;
-        const indicators = document.querySelectorAll(
-            ".carousel-indicator",
-        ) as NodeListOf<HTMLButtonElement>;
+        const tagsEl = document.getElementById("carousel-tags") as HTMLDivElement;
+        const titleEl = document.getElementById("carousel-title") as HTMLHeadingElement;
+        const descEl = document.getElementById("carousel-desc") as HTMLParagraphElement;
+        const prevBtn = document.getElementById("btn-prev") as HTMLButtonElement;
+        const nextBtn = document.getElementById("btn-next") as HTMLButtonElement;
+        const indicators = document.querySelectorAll(".carousel-indicator") as NodeListOf<HTMLButtonElement>;
 
         if (carouselSlides.length > 0) {
-            // Provide explicit types for function parameters (index: number)
             function updateCarousel(index: number): void {
                 const slide = carouselSlides[index];
                 titleEl.style.opacity = "0";
@@ -169,11 +169,11 @@ const initialSlide = carouselSlides[0];
                     titleEl.textContent = slide.title;
                     descEl.textContent = slide.description;
 
-                    // Provide explicit types for map parameters (tag: string)
+                    // Reuses the text-badge class without hardcoding typography utilities
                     tagsEl.innerHTML = slide.tags
                         .map(
                             (tag: string) =>
-                                `<span class="bg-[#2d3748] text-xs px-3 py-1 font-semibold text-blue-200 uppercase">${tag}</span>`,
+                                `<span class="text-badge bg-[#2d3748]">${tag}</span>`,
                         )
                         .join("");
 
@@ -181,30 +181,32 @@ const initialSlide = carouselSlides[0];
                     descEl.style.opacity = "1";
                 }, 150);
 
-                // Provide explicit types for forEach parameters
                 indicators.forEach(
                     (indicator: HTMLButtonElement, i: number) => {
                         if (i === index) {
-                            indicator.classList.remove(
-                                "border-gray-500",
-                                "bg-transparent",
-                            );
-                            indicator.classList.add(
-                                "border-[#3B82F6]",
-                                "bg-[#3B82F6]",
-                            );
+                            indicator.classList.remove("border-gray-500", "bg-transparent");
+                            indicator.classList.add("border-[#3B82F6]", "bg-[#3B82F6]");
                         } else {
-                            indicator.classList.remove(
-                                "border-[#3B82F6]",
-                                "bg-[#3B82F6]",
-                            );
-                            indicator.classList.add(
-                                "border-gray-500",
-                                "bg-transparent",
-                            );
+                            indicator.classList.remove("border-[#3B82F6]", "bg-[#3B82F6]");
+                            indicator.classList.add("border-gray-500", "bg-transparent");
                         }
                     },
                 );
+            }
+
+            function startAutoPlay() {
+                autoPlayInterval = window.setInterval(() => {
+                    currentIndex =
+                        currentIndex === carouselSlides.length - 1
+                            ? 0
+                            : currentIndex + 1;
+                    updateCarousel(currentIndex);
+                }, 7500); // 7.5 second scroll
+            }
+
+            function resetAutoPlay() {
+                if (autoPlayInterval) window.clearInterval(autoPlayInterval);
+                startAutoPlay();
             }
 
             prevBtn?.addEventListener("click", () => {
@@ -213,6 +215,7 @@ const initialSlide = carouselSlides[0];
                         ? carouselSlides.length - 1
                         : currentIndex - 1;
                 updateCarousel(currentIndex);
+                resetAutoPlay();
             });
 
             nextBtn?.addEventListener("click", () => {
@@ -221,19 +224,25 @@ const initialSlide = carouselSlides[0];
                         ? 0
                         : currentIndex + 1;
                 updateCarousel(currentIndex);
+                resetAutoPlay();
             });
 
             indicators.forEach((indicator: HTMLButtonElement) => {
-                // Provide explicit types for event listeners (e: Event)
                 indicator.addEventListener("click", (e: Event) => {
                     const target = e.target as HTMLButtonElement;
                     const indexStr = target.getAttribute("data-index");
                     if (indexStr) {
                         currentIndex = parseInt(indexStr, 10);
                         updateCarousel(currentIndex);
+                        resetAutoPlay();
                     }
                 });
             });
+
+            // Initialize auto-scroll if there is more than 1 slide
+            if (carouselSlides.length > 1) {
+                startAutoPlay();
+            }
         }
     }
 </script>
