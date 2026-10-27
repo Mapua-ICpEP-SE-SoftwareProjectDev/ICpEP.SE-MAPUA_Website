@@ -1,84 +1,168 @@
 ---
-import { getCollection } from "astro:content";
 import FilterPageLayout from "../layouts/FilterPageLayout.astro";
 
-const resources = await getCollection("database");
-const sortedResources = resources.sort((a, b) => {
-    // Fallback to 0 if the date is accidentally missing
-    const dateA = a.data.date ? a.data.date.valueOf() : 0;
-    const dateB = b.data.date ? b.data.date.valueOf() : 0;
-    return dateB - dateA;
-});
-
 const databaseFilters = [
-    { label: "All Courses", value: "all" },
-    { label: "CPE101", value: "CPE101" },
-    { label: "CPE120", value: "CPE120" },
-    { label: "CPE117", value: "CPE117" },
-    { label: "CPE200-1L", value: "CPE200-1L" },
-    { label: "CPE120-1D", value: "CPE120-1D" },
+    { label: "All Sources", value: "all" },
+    { label: "IEEE", value: "IEEE" },
+    { label: "MDPI", value: "MDPI" },
+    { label: "ACM", value: "ACM" },
 ];
 ---
 
 <FilterPageLayout
     pageTitle="Database | ICpEP Mapua"
     headerTitle="Research Database"
-    filterLabel="Filter by Course Code:"
+    filterLabel="Filter by source:"
     filterOptions={databaseFilters}
 >
-    {
-        sortedResources.map((res) => (
-            <article
-                class="filterable-item bg-[#151922] border border-[#2d3748] flex flex-col p-6 hover:border-[#3B82F6] transition-all duration-300"
-                data-title={res.data.title.toLowerCase()}
-                data-tags={JSON.stringify([res.data.course])}
-            >
-                <div class="flex items-center justify-between mb-4">
-                    <span class="bg-[#2d3748] text-[#3B82F6] text-xs px-2 py-1 font-semibold tracking-wider uppercase">
-                        {res.data.course}
-                    </span>
-                    <span class="text-xs text-gray-500 font-mono ml-4 text-right">
-                        {res.data.date
-                            ? res.data.date.toLocaleDateString("en-US", {
-                                  year: "numeric",
-                                  month: "short",
-                                  day: "numeric",
-                              })
-                            : "TBA"}
-                    </span>
-                </div>
+    <!-- Loading State -->
+    <div
+        id="loading-indicator"
+        class="w-full text-center py-12 text-[#3B82F6] col-span-full"
+    >
+        <svg
+            class="animate-spin h-8 w-8 mx-auto mb-4"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"></circle>
+            <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+        </svg>
+        <p class="text-gray-400 font-mono text-sm">
+            Fetching latest publications from Crossref...
+        </p>
+    </div>
 
-                <h2 class="text-card-title">
-                    {res.data.title}
-                </h2>
-                <div class="text-xs text-gray-400 font-mono mb-2">
-                    By {res.data.author && res.data.author.length > 0 ? res.data.author.join(', ') : 'ICpEP Admin'}
-                </div>
-
-                <p class="text-body-secondary mb-6 flex-grow">
-                    {res.data.description}
-                </p>
-
-                <a
-                    href={`/database/${res.id}`}
-                    class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-[#3B82F6] transition-colors mt-auto w-max"
-                >
-                    Read More
-                    <svg
-                        class="w-4 h-4 transition-transform group-hover:translate-x-1"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M14 5l7 7m0 0l-7 7m7-7H3"
-                        />
-                    </svg>
-                </a>
-            </article>
-        ))
-    }
+    <!-- Container for Dynamically Injected Cards -->
+    <div id="papers-container" class="contents"></div>
 </FilterPageLayout>
+
+<script>
+    // 1. Define the TypeScript interface for our paper object
+    interface Paper {
+        id: string;
+        title: string;
+        authors: string[];
+        date: string;
+        link: string;
+        source: string;
+    }
+
+    async function fetchCrossrefPapers() {
+        const container = document.getElementById("papers-container");
+        const loader = document.getElementById("loading-indicator");
+
+        if (!container || !loader) return;
+
+        try {
+            const res = await fetch(
+                `https://api.crossref.org/works?query.affiliation=Mapua+University&select=DOI,title,author,issued,URL,publisher&rows=50`,
+            );
+
+            if (!res.ok) throw new Error("Failed to fetch papers");
+
+            const data = await res.json();
+
+            // 2. Strongly type the resulting array as Paper[]
+            const papers: Paper[] = data.message.items.map((item: any) => {
+                const pubStr = (item.publisher || "").toLowerCase();
+                let source = "Other";
+                if (
+                    pubStr.includes("ieee") ||
+                    pubStr.includes("electrical and electronics")
+                )
+                    source = "IEEE";
+                else if (pubStr.includes("mdpi")) source = "MDPI";
+                else if (
+                    pubStr.includes("acm") ||
+                    pubStr.includes("computing machinery")
+                )
+                    source = "ACM";
+
+                return {
+                    id: item.DOI,
+                    title: item.title?.[0] || "Unknown Title",
+                    authors: item.author?.map(
+                        (a: any) => `${a.given} ${a.family}`,
+                    ) || ["Unknown Author"],
+                    date:
+                        item.issued?.["date-parts"]?.[0]?.join("-") ||
+                        "Date TBA",
+                    link: item.URL || `https://doi.org/${item.DOI}`,
+                    source: source,
+                };
+            });
+
+            // 3. Add explicit Paper types to 'a' and 'b'
+            papers.sort(
+                (a: Paper, b: Paper) =>
+                    new Date(b.date).valueOf() - new Date(a.date).valueOf(),
+            );
+
+            // 4. Add explicit Paper type to 'paper'
+            const cardsHTML = papers
+                .map(
+                    (paper: Paper) => `
+        <article
+          class="filterable-item bg-[#151922] border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-[#3B82F6] transition-all duration-300 p-6"
+          data-title="${paper.title.toLowerCase().replace(/"/g, "&quot;")}"
+          data-tags='["${paper.source}"]'
+        >
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-[#2d3748] text-[#3B82F6] text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">
+                ${paper.source}
+              </span>
+            </div>
+            <span class="text-xs text-gray-500 font-mono ml-4 text-right">
+              ${paper.date}
+            </span>
+          </div>
+
+          <h2 class="font-krona text-lg text-white group-hover:text-[#3B82F6] transition-colors line-clamp-3 mb-2">
+            ${paper.title}
+          </h2>
+          
+          <div class="text-xs text-gray-400 font-mono mb-6 flex-grow line-clamp-2">
+            By ${paper.authors.join(", ")}
+          </div>
+
+          <a
+            href="${paper.link}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-[#3B82F6] transition-colors mt-auto w-max"
+          >
+            Read Paper
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </a>
+        </article>
+      `,
+                )
+                .join("");
+
+            loader.remove();
+            container.innerHTML = cardsHTML;
+
+            document.dispatchEvent(new CustomEvent("papersLoaded"));
+        } catch (error) {
+            console.error(error);
+            loader.innerHTML = `<p class="text-red-400 font-mono text-sm">Failed to load publications. Please try again later.</p>`;
+        }
+    }
+
+    fetchCrossrefPapers();
+</script>
