@@ -103,3 +103,11 @@
         @apply text-xs font-mono uppercase tracking-widest font-semibold text-[#3B82F6] mb-2 block;
     }
 }
+
+html {
+    /* 1. Offsets the scroll to account for your fixed navbar */
+    scroll-padding-top: 6rem; 
+    
+    /* 2. Optional but highly recommended: adds a smooth gliding animation when clicking the dropdown links */
+    scroll-behavior: smooth;
+}

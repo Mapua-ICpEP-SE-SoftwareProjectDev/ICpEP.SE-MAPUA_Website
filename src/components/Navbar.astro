@@ -1,10 +1,8 @@
 ---
-import JoinModal from "../components/JoinModal.astro";
+import JoinModal from "./JoinModal.astro";
 
 const currentPath = Astro.url.pathname;
 
-// Helper function to check if the current URL starts with the link path
-// This ensures that navigating to "/updates/assembly" still highlights the "Updates" nav item.
 function isActive(path: string) {
     if (path === "/") return currentPath === "/";
     return currentPath.startsWith(path);
@@ -14,66 +12,74 @@ function isActive(path: string) {
 <header
     class="bg-[#0B0C10] border-b border-[#2d3748] fixed top-0 left-0 w-full z-50"
 >
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <div
+        class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative bg-[#0B0C10] z-50"
+    >
         <!-- Left Side: Logo and Main Nav -->
         <div class="flex items-center h-full gap-12">
-            <!-- Logo Placeholder -->
             <a href="/">
                 <div class="w-10 h-10 bg-[#3B82F6] rounded-full flex-shrink-0">
                 </div>
             </a>
 
-            <!-- Navigation Links -->
+            <!-- Desktop Navigation Links -->
             <nav class="hidden md:flex h-full items-center gap-8">
                 <!-- About Dropdown -->
-                <div class="group h-full flex items-center cursor-pointer">
-                    <a
-                        href="/about"
-                        class={`text-sm transition-colors flex items-center gap-1 ${isActive("/about") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
-                    >
-                        About
-                        <svg
-                            class="w-3 h-3 transition-transform group-hover:rotate-180"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M19 9l-7 7-7-7"></path></svg
+                <div class="group h-full flex items-center">
+                    <div class="flex items-center">
+                        <a
+                            href="/about"
+                            class={`text-sm transition-colors ${isActive("/about") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
                         >
-                    </a>
+                            About
+                        </a>
+                        <button
+                            class="desktop-toggle ml-1 p-2 text-gray-400 hover:text-white transition-colors focus:outline-none"
+                            aria-label="Toggle About Dropdown"
+                        >
+                            <svg
+                                class="w-3 h-3 transition-transform group-hover:rotate-180 toggle-icon"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path></svg
+                            >
+                        </button>
+                    </div>
                     <div
-                        class="absolute left-0 top-full w-full bg-[#0B0C10] border-b border-[#2d3748] hidden group-hover:block shadow-xl"
+                        class="dropdown-menu absolute left-0 top-full w-full bg-[#0B0C10] border-b border-[#2d3748] hidden group-hover:block shadow-xl"
                     >
                         <div
                             class="max-w-7xl mx-auto px-6 py-8 flex gap-24 ml-[200px] text-sm text-gray-300"
                         >
                             <div class="flex flex-col gap-4">
-                                <a href="/about/vision" class="hover:text-white"
+                                <a href="/about#vision" class="hover:text-white"
                                     >Vision</a
                                 >
                                 <a
-                                    href="/about/mission"
+                                    href="/about#mission"
                                     class="hover:text-white">Mission</a
                                 >
                                 <a
-                                    href="/about/objectives"
+                                    href="/about#objectives"
                                     class="hover:text-white">Objectives</a
                                 >
                                 <a
-                                    href="/about/core-values"
+                                    href="/about#core-values"
                                     class="hover:text-white">Core Values</a
                                 >
                             </div>
                             <div class="flex flex-col gap-4">
-                                <a
-                                    href="/about/history"
+                                <!-- <a
+                                    href="/about#history"
                                     class="hover:text-white">History</a
-                                >
+                                > -->
                                 <a
-                                    href="/about/officers"
+                                    href="/about#officers"
                                     class="hover:text-white">Officers</a
                                 >
                             </div>
@@ -82,26 +88,33 @@ function isActive(path: string) {
                 </div>
 
                 <!-- Updates Dropdown -->
-                <div class="group h-full flex items-center cursor-pointer">
-                    <a
-                        href="/updates"
-                        class={`text-sm transition-colors flex items-center gap-1 ${isActive("/updates") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
-                    >
-                        Updates
-                        <svg
-                            class="w-3 h-3 transition-transform group-hover:rotate-180"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M19 9l-7 7-7-7"></path></svg
+                <div class="group h-full flex items-center">
+                    <div class="flex items-center">
+                        <a
+                            href="/updates"
+                            class={`text-sm transition-colors ${isActive("/updates") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
                         >
-                    </a>
+                            Updates
+                        </a>
+                        <button
+                            class="desktop-toggle ml-1 p-2 text-gray-400 hover:text-white transition-colors focus:outline-none"
+                            aria-label="Toggle Updates Dropdown"
+                        >
+                            <svg
+                                class="w-3 h-3 transition-transform group-hover:rotate-180 toggle-icon"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path></svg
+                            >
+                        </button>
+                    </div>
                     <div
-                        class="absolute left-0 top-full w-full bg-[#0B0C10] border-b border-[#2d3748] hidden group-hover:block shadow-xl"
+                        class="dropdown-menu absolute left-0 top-full w-full bg-[#0B0C10] border-b border-[#2d3748] hidden group-hover:block shadow-xl"
                     >
                         <div
                             class="max-w-7xl mx-auto px-6 py-8 flex gap-24 ml-[200px] text-sm text-gray-300"
@@ -129,26 +142,33 @@ function isActive(path: string) {
                 </div>
 
                 <!-- Database Dropdown -->
-                <div class="group h-full flex items-center cursor-pointer">
-                    <a
-                        href="/database"
-                        class={`text-sm transition-colors flex items-center gap-1 ${isActive("/database") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
-                    >
-                        Database
-                        <svg
-                            class="w-3 h-3 transition-transform group-hover:rotate-180"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M19 9l-7 7-7-7"></path></svg
+                <div class="group h-full flex items-center">
+                    <div class="flex items-center">
+                        <a
+                            href="/database"
+                            class={`text-sm transition-colors ${isActive("/database") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
                         >
-                    </a>
+                            Database
+                        </a>
+                        <button
+                            class="desktop-toggle ml-1 p-2 text-gray-400 hover:text-white transition-colors focus:outline-none"
+                            aria-label="Toggle Database Dropdown"
+                        >
+                            <svg
+                                class="w-3 h-3 transition-transform group-hover:rotate-180 toggle-icon"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path></svg
+                            >
+                        </button>
+                    </div>
                     <div
-                        class="absolute left-0 top-full w-full bg-[#0B0C10] border-b border-[#2d3748] hidden group-hover:block shadow-xl"
+                        class="dropdown-menu absolute left-0 top-full w-full bg-[#0B0C10] border-b border-[#2d3748] hidden group-hover:block shadow-xl"
                     >
                         <div
                             class="max-w-7xl mx-auto px-6 py-8 flex gap-24 ml-[200px] text-sm text-gray-300"
@@ -184,7 +204,6 @@ function isActive(path: string) {
                     class={`text-sm transition-colors ${isActive("/merch") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
                     >Merch</a
                 >
-
                 <a
                     href="/faqs"
                     class={`text-sm transition-colors ${isActive("/faqs") ? "text-[#3B82F6] font-semibold" : "text-gray-200 hover:text-[#3B82F6]"}`}
@@ -193,8 +212,8 @@ function isActive(path: string) {
             </nav>
         </div>
 
-        <!-- Right Side: Action Buttons -->
-        <div class="flex items-center gap-4">
+        <!-- Right Side: Desktop Action Buttons -->
+        <div class="hidden md:flex items-center gap-4">
             <a
                 href="/contact"
                 class="border border-white px-5 py-2 text-sm font-medium hover:bg-white hover:text-black transition-colors"
@@ -206,7 +225,308 @@ function isActive(path: string) {
                 >Join Us</button
             >
         </div>
+
+        <!-- Mobile Hamburger Button -->
+        <button
+            id="hamburger-btn"
+            class="md:hidden text-white p-2"
+            aria-label="Toggle Menu"
+        >
+            <svg
+                id="menu-icon"
+                class="w-6 h-6 transition-opacity duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"></path></svg
+            >
+            <svg
+                id="close-icon"
+                class="w-6 h-6 hidden transition-opacity duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"></path></svg
+            >
+        </button>
     </div>
 
-    <JoinModal isMemberClosed={false} isOfficerClosed={false} />
+    <!-- Mobile Full-Screen Menu -->
+    <div
+        id="mobile-menu"
+        class="fixed inset-0 top-20 bg-[#0B0C10] z-40 hidden flex-col overflow-y-auto px-6 py-8 border-t border-[#2d3748]"
+    >
+        <nav class="flex flex-col gap-6 text-gray-200">
+            <!-- About Accordion -->
+            <details class="group">
+                <summary
+                    class="flex justify-between items-center text-lg font-medium list-none cursor-pointer"
+                >
+                    <!-- event.stopPropagation() keeps the link click from toggling the accordion -->
+                    <a
+                        href="/about"
+                        onclick="event.stopPropagation()"
+                        class={`flex-grow py-2 ${isActive("/about") ? "text-[#3B82F6]" : ""}`}
+                        >About</a
+                    >
+
+                    <!-- Changed from <button> to <div> so the native <summary> toggle isn't blocked -->
+                    <div class="p-2 flex items-center justify-center">
+                        <svg
+                            class="w-5 h-5 transition-transform group-open:rotate-180"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"></path></svg
+                        >
+                    </div>
+                </summary>
+                <div
+                    class="flex flex-col gap-4 pl-4 mt-2 text-gray-400 border-l border-[#2d3748] ml-2"
+                >
+                    <a href="/about#vision" class="hover:text-white">Vision</a>
+                    <a href="/about#mission" class="hover:text-white">Mission</a
+                    >
+                    <a href="/about#objectives" class="hover:text-white"
+                        >Objectives</a
+                    >
+                    <a href="/about#core-values" class="hover:text-white"
+                        >Core Values</a
+                    >
+                    <!-- <a href="/about#history" class="hover:text-white">History</a
+                    > -->
+                    <a href="/about#officers" class="hover:text-white"
+                        >Officers</a
+                    >
+                </div>
+            </details>
+
+            <!-- Updates Accordion -->
+            <details class="group">
+                <summary
+                    class="flex justify-between items-center text-lg font-medium list-none cursor-pointer"
+                >
+                    <a
+                        href="/updates"
+                        onclick="event.stopPropagation()"
+                        class={`flex-grow py-2 ${isActive("/updates") ? "text-[#3B82F6]" : ""}`}
+                        >Updates</a
+                    >
+
+                    <div class="p-2 flex items-center justify-center">
+                        <svg
+                            class="w-5 h-5 transition-transform group-open:rotate-180"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"></path></svg
+                        >
+                    </div>
+                </summary>
+                <div
+                    class="flex flex-col gap-4 pl-4 mt-2 text-gray-400 border-l border-[#2d3748] ml-2"
+                >
+                    <a href="/updates?category=Events" class="hover:text-white"
+                        >Events</a
+                    >
+                    <a href="/updates?category=Blogs" class="hover:text-white"
+                        >Blogs</a
+                    >
+                    <a
+                        href="/updates?category=Showcases"
+                        class="hover:text-white">Showcases</a
+                    >
+                    <a href="/updates?category=News" class="hover:text-white"
+                        >News</a
+                    >
+                </div>
+            </details>
+
+            <!-- Database Accordion -->
+            <details class="group">
+                <summary
+                    class="flex justify-between items-center text-lg font-medium list-none cursor-pointer"
+                >
+                    <a
+                        href="/database"
+                        onclick="event.stopPropagation()"
+                        class={`flex-grow py-2 ${isActive("/database") ? "text-[#3B82F6]" : ""}`}
+                        >Database</a
+                    >
+
+                    <div class="p-2 flex items-center justify-center">
+                        <svg
+                            class="w-5 h-5 transition-transform group-open:rotate-180"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"></path></svg
+                        >
+                    </div>
+                </summary>
+                <div
+                    class="flex flex-col gap-4 pl-4 mt-2 text-gray-400 border-l border-[#2d3748] ml-2"
+                >
+                    <a href="/database?category=CPE101" class="hover:text-white"
+                        >CPE101</a
+                    >
+                    <a href="/database?category=CPE120" class="hover:text-white"
+                        >CPE120</a
+                    >
+                    <a href="/database?category=CPE117" class="hover:text-white"
+                        >CPE117</a
+                    >
+                    <a
+                        href="/database?category=CPE200-1L"
+                        class="hover:text-white">CPE200-1L</a
+                    >
+                    <a
+                        href="/database?category=CPE120-1D"
+                        class="hover:text-white">CPE120-1D</a
+                    >
+                </div>
+            </details>
+
+            <a
+                href="/merch"
+                class={`text-lg font-medium py-2 ${isActive("/merch") ? "text-[#3B82F6]" : ""}`}
+                >Merch</a
+            >
+            <a
+                href="/faqs"
+                class={`text-lg font-medium py-2 ${isActive("/faqs") ? "text-[#3B82F6]" : ""}`}
+                >FAQs</a
+            >
+        </nav>
+
+        <!-- Mobile Action Buttons -->
+        <div class="mt-8 flex flex-col gap-4">
+            <a
+                href="/contact"
+                class="w-full text-center border border-white px-5 py-3 text-sm font-medium hover:bg-white hover:text-black transition-colors"
+                >Contact</a
+            >
+            <!-- Trigger desktop join-btn programmatically -->
+            <button
+                onclick="document.getElementById('join-btn').click();"
+                class="w-full bg-white text-black px-5 py-3 text-sm font-medium hover:bg-gray-200 transition-colors"
+                >Join Us</button
+            >
+        </div>
+    </div>
+
+    <!-- Inject Modal Component -->
+    <JoinModal isMemberClosed={true} isOfficerClosed={false} />
 </header>
+
+<script>
+    // --- Mobile Hamburger Menu Logic ---
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuIcon = document.getElementById("menu-icon");
+    const closeIcon = document.getElementById("close-icon");
+
+    // Helper function to cleanly close the menu
+    function closeMobileMenu() {
+        if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+            mobileMenu.classList.add("hidden");
+            mobileMenu.classList.remove("flex");
+            document.body.style.overflow = ""; // Restore scrolling
+            menuIcon?.classList.remove("hidden");
+            closeIcon?.classList.add("hidden");
+        }
+    }
+
+    if (hamburgerBtn && mobileMenu && menuIcon && closeIcon) {
+        hamburgerBtn.addEventListener("click", () => {
+            const isHidden = mobileMenu.classList.contains("hidden");
+
+            if (isHidden) {
+                // Open Menu
+                mobileMenu.classList.remove("hidden");
+                mobileMenu.classList.add("flex");
+                document.body.style.overflow = "hidden"; // Lock background scrolling
+                menuIcon.classList.add("hidden");
+                closeIcon.classList.remove("hidden");
+            } else {
+                closeMobileMenu();
+            }
+        });
+
+        // Automatically close the mobile menu when ANY link inside it is clicked
+        // This solves the issue of same-page anchor links leaving the menu open.
+        const mobileLinks = mobileMenu.querySelectorAll("a");
+        mobileLinks.forEach((link) => {
+            link.addEventListener("click", closeMobileMenu);
+        });
+    }
+
+    // --- Desktop Touch/Tap Dropdown Logic ---
+    const desktopToggles = document.querySelectorAll(".desktop-toggle");
+    const dropdownMenus = document.querySelectorAll(".dropdown-menu");
+
+    desktopToggles.forEach((toggle) => {
+        toggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const group = toggle.closest(".group");
+            const menu = group?.querySelector(".dropdown-menu");
+            const icon = toggle.querySelector(".toggle-icon");
+
+            if (menu && icon) {
+                const isCurrentlyOpen = menu.classList.contains("!block");
+
+                dropdownMenus.forEach((m) => {
+                    m.classList.remove("!block");
+                    const i = m
+                        .closest(".group")
+                        ?.querySelector(".toggle-icon");
+                    if (i) i.classList.remove("!rotate-180");
+                });
+
+                if (!isCurrentlyOpen) {
+                    menu.classList.add("!block");
+                    icon.classList.add("!rotate-180");
+                }
+            }
+        });
+    });
+
+    document.addEventListener("click", (e) => {
+        dropdownMenus.forEach((menu) => {
+            const group = menu.closest(".group");
+            if (group && !group.contains(e.target as Node)) {
+                menu.classList.remove("!block");
+                const icon = group.querySelector(".toggle-icon");
+                if (icon) icon.classList.remove("!rotate-180");
+            }
+        });
+    });
+
+    // Hide default WebKit dropdown arrows on mobile accordions
+    const style = document.createElement("style");
+    style.innerHTML =
+        "details > summary::-webkit-details-marker { display: none; }";
+    document.head.appendChild(style);
+</script>
