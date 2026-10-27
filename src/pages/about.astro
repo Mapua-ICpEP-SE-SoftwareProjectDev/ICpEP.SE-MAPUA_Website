@@ -2,6 +2,57 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+
+// Define a strict structure for your officer data
+interface Officer {
+    name: string;
+    role: string;
+    isBOD?: boolean;
+    image?: string;
+}
+
+// 1. The Apex
+const apexBranch: Officer[] = [
+    { name: "Faculty Name", role: "FACULTY ADVISER" },
+    { name: "President Name", role: "PRESIDENT", isBOD: true },
+];
+
+// 2. Internal Affairs
+const internalBranch: Officer[] = [
+    { name: "Internal VP Name", role: "INTERNAL VICE PRESIDENT", isBOD: true },
+    { name: "Treasurer Name", role: "TREASURER" },
+    { name: "Auditor Name", role: "AUDITOR" },
+    { name: "Secretary Name", role: "SECRETARY" },
+    { name: "Asst. Sec Name", role: "ASSISTANT SECRETARY" },
+    { name: "Head Name", role: "CREATIVES & DOCS HEAD" },
+    { name: "Vice Head Name", role: "CREATIVES & DOCS VICE HEAD" },
+    { name: "Head Name", role: "LOGISTICS & EVENTS HEAD" },
+    { name: "Vice Head Name", role: "LOGISTICS & EVENTS VICE HEAD" },
+];
+
+// 3. Project Development
+const projDevBranch: Officer[] = [
+    {
+        name: "Committee Head Name",
+        role: "PROJECT DEVELOPMENT HEAD",
+        isBOD: true,
+    },
+    { name: "Joel Samaniego", role: "SOFTWARE DEVELOPMENT HEAD" },
+    { name: "Hardware Head Name", role: "HARDWARE DEVELOPMENT HEAD" },
+];
+
+// 4. External Affairs
+const externalBranch: Officer[] = [
+    { name: "External VP Name", role: "EXTERNAL VICE PRESIDENT", isBOD: true },
+    { name: "Membership Head Name", role: "MEMBERSHIP HEAD" },
+    { name: "Membership Vice Head", role: "MEMBERSHIP VICE HEAD" },
+    { name: "Externals Head Name", role: "EXTERNALS & PR HEAD" },
+    { name: "Externals Vice Head", role: "EXTERNALS & PR VICE HEAD" },
+    { name: "4th Yr Rep", role: "4TH YEAR BATCH REP" },
+    { name: "3rd Yr Rep", role: "3RD YEAR BATCH REP" },
+    { name: "2nd Yr Rep", role: "2ND YEAR BATCH REP" },
+    { name: "1st Yr Rep", role: "1ST YEAR BATCH REP" },
+];
 ---
 
 <Layout title="About Us">
@@ -411,82 +462,135 @@ import Footer from "../components/Footer.astro";
         </section> -->
 
         <!-- Officers Section -->
-        <section id="officers" class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="font-krona text-2xl md:text-3xl text-white">
-                    Executive Officers
+        <section
+            id="officers"
+            class="scroll-mt-24 max-w-7xl mx-auto px-6 mb-24"
+        >
+            <div class="text-center mb-16">
+                <h2 class="text-section-heading mt-0 mb-4">
+                    Organization Structure
                 </h2>
-                <p class="text-gray-400 mt-4 text-sm">
-                    The dedicated team leading the organization.
+                <p class="text-body-secondary">
+                    The dedicated team leading Mapúa-ICpEP.SE.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Officer Card 1 -->
-                <div
-                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
-                >
+            <!-- The Apex (Adviser & President) -->
+            <div
+                class="flex flex-col md:flex-row justify-center items-center gap-8 mb-16"
+            >
+                {
+                    apexBranch.map((officer) => (
+                        <div class="bg-[#151922] border border-[#2d3748] p-6 w-full max-w-sm text-center relative hover:-translate-y-1 hover:border-[#3B82F6] transition-all duration-300">
+                            {officer.isBOD && (
+                                <span class="absolute top-4 right-4 text-badge bg-[#2d3748]">
+                                    B.O.D.
+                                </span>
+                            )}
+                            <div class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-[#3B82F6]" />
+                            <h3 class="text-card-title text-sm">
+                                {officer.name}
+                            </h3>
+                            <p class="text-supertitle mt-2">{officer.role}</p>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- The Executive Pillars (Stacked Rows) -->
+            <div class="flex flex-col gap-16">
+                <!-- 1. Internal Affairs Branch -->
+                <div class="flex flex-col gap-6">
                     <div
-                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-[#3B82F6]"
+                        class="border-b border-[#3B82F6] pb-2 mb-4 text-center"
                     >
+                        <span class="text-supertitle text-[#3B82F6] text-lg"
+                            >Internal Affairs</span
+                        >
                     </div>
-                    <h3 class="text-white font-krona text-sm mb-1">Jane Doe</h3>
-                    <p
-                        class="text-[#3B82F6] text-xs font-semibold tracking-wide"
-                    >
-                        PRESIDENT
-                    </p>
+                    <!-- Flex wrap allows cards to sit in rows and center automatically -->
+                    <div class="flex flex-wrap justify-center gap-6">
+                        {
+                            internalBranch.map((officer) => (
+                                <div class="bg-[#151922] border border-[#2d3748] p-6 w-full sm:w-80 text-center relative hover:border-[#3B82F6] transition-colors duration-300">
+                                    {officer.isBOD && (
+                                        <span class="absolute top-4 right-4 text-badge bg-[#2d3748]">
+                                            B.O.D.
+                                        </span>
+                                    )}
+                                    <div class="w-16 h-16 bg-[#1e293b] rounded-full mx-auto mb-4 border border-[#3B82F6]" />
+                                    <h3 class="text-card-title text-sm">
+                                        {officer.name}
+                                    </h3>
+                                    <p class="text-supertitle mt-2">
+                                        {officer.role}
+                                    </p>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
-                <!-- Officer Card 2 -->
-                <div
-                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
-                >
+
+                <!-- 2. External Affairs Branch -->
+                <div class="flex flex-col gap-6">
                     <div
-                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-gray-600"
+                        class="border-b border-[#3B82F6] pb-2 mb-4 text-center"
                     >
+                        <span class="text-supertitle text-[#3B82F6] text-lg"
+                            >External Affairs</span
+                        >
                     </div>
-                    <h3 class="text-white font-krona text-sm mb-1">
-                        John Smith
-                    </h3>
-                    <p
-                        class="text-gray-400 text-xs font-semibold tracking-wide"
-                    >
-                        VICE PRESIDENT
-                    </p>
+                    <div class="flex flex-wrap justify-center gap-6">
+                        {
+                            externalBranch.map((officer) => (
+                                <div class="bg-[#151922] border border-[#2d3748] p-6 w-full sm:w-80 text-center relative hover:border-[#3B82F6] transition-colors duration-300">
+                                    {officer.isBOD && (
+                                        <span class="absolute top-4 right-4 text-badge bg-[#2d3748]">
+                                            B.O.D.
+                                        </span>
+                                    )}
+                                    <div class="w-16 h-16 bg-[#1e293b] rounded-full mx-auto mb-4 border border-[#3B82F6]" />
+                                    <h3 class="text-card-title text-sm">
+                                        {officer.name}
+                                    </h3>
+                                    <p class="text-supertitle mt-2">
+                                        {officer.role}
+                                    </p>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
-                <!-- Officer Card 3 -->
-                <div
-                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
-                >
+
+                <!-- 3. Project Development Branch -->
+                <div class="flex flex-col gap-6">
                     <div
-                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-gray-600"
+                        class="border-b border-[#3B82F6] pb-2 mb-4 text-center"
                     >
+                        <span class="text-supertitle text-[#3B82F6] text-lg"
+                            >Project Development</span
+                        >
                     </div>
-                    <h3 class="text-white font-krona text-sm mb-1">
-                        Alex Johnson
-                    </h3>
-                    <p
-                        class="text-gray-400 text-xs font-semibold tracking-wide"
-                    >
-                        SECRETARY
-                    </p>
-                </div>
-                <!-- Officer Card 4 -->
-                <div
-                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
-                >
-                    <div
-                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-gray-600"
-                    >
+                    <div class="flex flex-wrap justify-center gap-6">
+                        {
+                            projDevBranch.map((officer) => (
+                                <div class="bg-[#151922] border border-[#2d3748] p-6 w-full sm:w-80 text-center relative hover:border-[#3B82F6] transition-colors duration-300">
+                                    {officer.isBOD && (
+                                        <span class="absolute top-4 right-4 text-badge bg-[#2d3748]">
+                                            B.O.D.
+                                        </span>
+                                    )}
+                                    <div class="w-16 h-16 bg-[#1e293b] rounded-full mx-auto mb-4 border border-[#3B82F6]" />
+                                    <h3 class="text-card-title text-sm">
+                                        {officer.name}
+                                    </h3>
+                                    <p class="text-supertitle mt-2">
+                                        {officer.role}
+                                    </p>
+                                </div>
+                            ))
+                        }
                     </div>
-                    <h3 class="text-white font-krona text-sm mb-1">
-                        Sam Rivera
-                    </h3>
-                    <p
-                        class="text-gray-400 text-xs font-semibold tracking-wide"
-                    >
-                        TREASURER
-                    </p>
                 </div>
             </div>
         </section>
