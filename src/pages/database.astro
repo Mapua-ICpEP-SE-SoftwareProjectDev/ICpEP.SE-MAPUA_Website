@@ -15,9 +15,12 @@ const databaseFilters = [
     filterLabel="Filter by source:"
     filterOptions={databaseFilters}
 >
-    <!-- Loading State -->
+    <!-- Container for Dynamically Injected Cards -->
+    <div id="papers-container" class="contents"></div>
+
+    <!-- Initial Full-Page Loader -->
     <div
-        id="loading-indicator"
+        id="initial-loader"
         class="w-full text-center py-12 text-[#3B82F6] col-span-full"
     >
         <svg
@@ -40,16 +43,45 @@ const databaseFilters = [
             ></path>
         </svg>
         <p class="text-gray-400 font-mono text-sm">
-            Fetching latest publications from Crossref...
+            Fetching latest publications...
         </p>
     </div>
 
-    <!-- Container for Dynamically Injected Cards -->
-    <div id="papers-container" class="contents"></div>
+    <!-- Load More Button -->
+    <div
+        class="col-span-full flex justify-center mt-8 hidden"
+        id="load-more-container"
+    >
+        <button
+            id="load-more-btn"
+            class="border border-[#3B82F6] text-[#3B82F6] px-6 py-2 font-medium hover:bg-[#3B82F6] hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+            <span id="load-more-text">Load More</span>
+            <svg
+                id="load-more-spinner"
+                class="animate-spin h-4 w-4 hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+            >
+                <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"></circle>
+                <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+            </svg>
+        </button>
+    </div>
 </FilterPageLayout>
 
 <script>
-    // 1. Define the TypeScript interface for our paper object
     interface Paper {
         id: string;
         title: string;
@@ -59,23 +91,91 @@ const databaseFilters = [
         source: string;
     }
 
-    async function fetchCrossrefPapers() {
-        const container = document.getElementById("papers-container");
-        const loader = document.getElementById("loading-indicator");
+    let offset = 0;
+    const limit = 40;
+    let isFetching = false;
 
-        if (!container || !loader) return;
+    // New variables for Debounced Search
+    let currentSearchQuery = "";
+    let debounceTimer: any;
+
+    const container = document.getElementById("papers-container");
+    const initialLoader = document.getElementById("initial-loader");
+    const loadMoreContainer = document.getElementById("load-more-container");
+    const loadMoreBtn = document.getElementById(
+        "load-more-btn",
+    ) as HTMLButtonElement;
+    const loadMoreText = document.getElementById("load-more-text");
+    const loadMoreSpinner = document.getElementById("load-more-spinner");
+
+    const searchInput = document.querySelector(
+        'input[type="text"], input[type="search"]',
+    ) as HTMLInputElement;
+    const filterSelect = document.querySelector("select") as HTMLSelectElement;
+
+    // Added isReset parameter to handle fresh searches
+    async function fetchCrossrefPapers(isReset = false) {
+        if (isFetching || !container) return;
+        isFetching = true;
+
+        // If it is a new search, reset the UI and pagination
+        if (isReset) {
+            offset = 0;
+            container.innerHTML = "";
+            if (initialLoader) {
+                initialLoader.classList.remove("hidden");
+                const loaderText = initialLoader.querySelector("p");
+                if (loaderText)
+                    loaderText.textContent = currentSearchQuery
+                        ? `Searching for "${currentSearchQuery}"...`
+                        : "Fetching latest publications...";
+            }
+            if (loadMoreContainer) loadMoreContainer.classList.add("hidden");
+        } else if (offset > 0) {
+            if (loadMoreText) loadMoreText.textContent = "Loading...";
+            loadMoreSpinner?.classList.remove("hidden");
+            loadMoreBtn.disabled = true;
+        }
 
         try {
-            const res = await fetch(
-                `https://api.crossref.org/works?query.affiliation=Mapua+University&select=DOI,title,author,issued,URL,publisher&rows=50`,
-            );
+            const today = new Date().toISOString().split("T")[0];
 
+            // Base API URL
+            let apiUrl = `https://api.crossref.org/works?query.affiliation=Mapua&select=DOI,title,author,issued,URL,publisher&sort=published&order=desc&filter=until-pub-date:${today}&rows=${limit}&offset=${offset}`;
+
+            // Append the search keyword to the API request if it exists
+            if (currentSearchQuery) {
+                apiUrl += `&query=${encodeURIComponent(currentSearchQuery)}`;
+            }
+
+            const res = await fetch(apiUrl);
             if (!res.ok) throw new Error("Failed to fetch papers");
 
             const data = await res.json();
+            const rawItems = data.message.items;
 
-            // 2. Strongly type the resulting array as Paper[]
-            const papers: Paper[] = data.message.items.map((item: any) => {
+            if (rawItems.length === 0) {
+                if (isReset && initialLoader) {
+                    initialLoader.innerHTML = `<p class="text-gray-400 font-mono text-sm">No results found for "${currentSearchQuery}".</p>`;
+                }
+                if (loadMoreContainer)
+                    loadMoreContainer.classList.add("hidden");
+                return;
+            }
+
+            const validItems = rawItems.filter((item: any) => {
+                if (!item.author) return false;
+                return item.author.some((author: any) => {
+                    if (!author.affiliation) return false;
+                    return author.affiliation.some(
+                        (aff: any) =>
+                            aff.name &&
+                            aff.name.toLowerCase().includes("mapua"),
+                    );
+                });
+            });
+
+            const papers: Paper[] = validItems.map((item: any) => {
                 const pubStr = (item.publisher || "").toLowerCase();
                 let source = "Other";
                 if (
@@ -90,79 +190,139 @@ const databaseFilters = [
                 )
                     source = "ACM";
 
+                // Extract the date array [YYYY, MM, DD]
+                const dParts = item.issued?.["date-parts"]?.[0];
+                let formattedDate = "Date TBA";
+
+                if (dParts && dParts.length > 0) {
+                    const year = dParts[0];
+                    const month = dParts[1];
+                    const day = dParts[2];
+
+                    if (year && month && day) {
+                        // 1. Full Date exists (e.g., "Oct 31, 2026")
+                        const dateObj = new Date(year, month - 1, day);
+                        formattedDate = dateObj.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                        });
+                    } else if (year && month) {
+                        // 2. Day is missing (e.g., "Oct 2026")
+                        const dateObj = new Date(year, month - 1);
+                        formattedDate = dateObj.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                        });
+                    } else if (year) {
+                        // 3. Month and Day are missing (e.g., "2026")
+                        formattedDate = `${year}`;
+                    }
+                }
+
                 return {
                     id: item.DOI,
                     title: item.title?.[0] || "Unknown Title",
                     authors: item.author?.map(
                         (a: any) => `${a.given} ${a.family}`,
                     ) || ["Unknown Author"],
-                    date:
-                        item.issued?.["date-parts"]?.[0]?.join("-") ||
-                        "Date TBA",
+                    date: formattedDate,
                     link: item.URL || `https://doi.org/${item.DOI}`,
                     source: source,
                 };
             });
 
-            // 3. Add explicit Paper types to 'a' and 'b'
-            papers.sort(
-                (a: Paper, b: Paper) =>
-                    new Date(b.date).valueOf() - new Date(a.date).valueOf(),
-            );
-
-            // 4. Add explicit Paper type to 'paper'
             const cardsHTML = papers
                 .map(
                     (paper: Paper) => `
-        <article
-          class="filterable-item bg-[#151922] border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-[#3B82F6] transition-all duration-300 p-6"
-          data-title="${paper.title.toLowerCase().replace(/"/g, "&quot;")}"
-          data-tags='["${paper.source}"]'
-        >
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex flex-wrap gap-2">
-              <span class="bg-[#2d3748] text-[#3B82F6] text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">
-                ${paper.source}
-              </span>
-            </div>
-            <span class="text-xs text-gray-500 font-mono ml-4 text-right">
-              ${paper.date}
-            </span>
-          </div>
-
-          <h2 class="font-krona text-lg text-white group-hover:text-[#3B82F6] transition-colors line-clamp-3 mb-2">
-            ${paper.title}
-          </h2>
-          
-          <div class="text-xs text-gray-400 font-mono mb-6 flex-grow line-clamp-2">
-            By ${paper.authors.join(", ")}
-          </div>
-
-          <a
-            href="${paper.link}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-[#3B82F6] transition-colors mt-auto w-max"
-          >
-            Read Paper
-            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-            </svg>
-          </a>
-        </article>
-      `,
+                <article class="filterable-item bg-[#151922] border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-[#3B82F6] transition-all duration-300 p-6" data-tags='["${paper.source}"]'>
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="flex flex-wrap gap-2">
+                      <span class="bg-[#2d3748] text-[#3B82F6] text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">${paper.source}</span>
+                    </div>
+                    <span class="text-xs text-gray-500 font-mono ml-4 text-right">${paper.date}</span>
+                  </div>
+                  <h2 class="font-krona text-lg text-white group-hover:text-[#3B82F6] transition-colors line-clamp-3 mb-2">${paper.title}</h2>
+                  <div class="text-xs text-gray-400 font-mono mb-6 flex-grow line-clamp-2">By ${paper.authors.join(", ")}</div>
+                  <a href="${paper.link}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-[#3B82F6] transition-colors mt-auto w-max">
+                    Read Paper
+                    <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                  </a>
+                </article>
+            `,
                 )
                 .join("");
 
-            loader.remove();
-            container.innerHTML = cardsHTML;
+            container.insertAdjacentHTML("beforeend", cardsHTML);
 
-            document.dispatchEvent(new CustomEvent("papersLoaded"));
+            if (initialLoader) initialLoader.classList.add("hidden");
+
+            if (rawItems.length === limit && loadMoreContainer) {
+                loadMoreContainer.classList.remove("hidden");
+            } else if (loadMoreContainer) {
+                loadMoreContainer.classList.add("hidden");
+            }
+
+            offset += limit;
+            applyFilters();
         } catch (error) {
             console.error(error);
-            loader.innerHTML = `<p class="text-red-400 font-mono text-sm">Failed to load publications. Please try again later.</p>`;
+            if (initialLoader && offset === 0) {
+                initialLoader.innerHTML = `<p class="text-red-400 font-mono text-sm">Failed to load publications. Please try again later.</p>`;
+            }
+        } finally {
+            isFetching = false;
+            if (loadMoreBtn && offset > 0) {
+                if (loadMoreText) loadMoreText.textContent = "Load More";
+                loadMoreSpinner?.classList.add("hidden");
+                loadMoreBtn.disabled = false;
+            }
         }
     }
 
-    fetchCrossrefPapers();
+    // Client-side filtering is now restricted ONLY to the Publisher dropdown
+    function applyFilters() {
+        const category = filterSelect?.value || "all";
+        const items = document.querySelectorAll(".filterable-item");
+
+        items.forEach((item) => {
+            const tagsStr = item.getAttribute("data-tags") || "[]";
+            let tags = [];
+            try {
+                tags = JSON.parse(tagsStr);
+            } catch (e) {}
+
+            if (category === "all" || tags.includes(category)) {
+                item.classList.remove("hidden");
+                item.classList.add("flex");
+            } else {
+                item.classList.add("hidden");
+                item.classList.remove("flex");
+            }
+        });
+    }
+
+    // Debounced Search Event Listener
+    if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const query = (e.target as HTMLInputElement).value.trim();
+
+                // Only trigger fetch if the query actually changed
+                if (currentSearchQuery !== query) {
+                    currentSearchQuery = query;
+                    fetchCrossrefPapers(true); // Pass true to trigger a complete reset
+                }
+            }, 1000); // Wait 1000ms (1 second) after typing stops
+        });
+    }
+
+    if (filterSelect) filterSelect.addEventListener("change", applyFilters);
+    if (loadMoreBtn)
+        loadMoreBtn.addEventListener("click", () => fetchCrossrefPapers(false));
+
+    fetchCrossrefPapers(true);
 </script>
