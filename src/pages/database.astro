@@ -21,7 +21,7 @@ const databaseFilters = [
     <!-- Initial Full-Page Loader -->
     <div
         id="initial-loader"
-        class="w-full text-center py-12 text-[#3B82F6] col-span-full"
+        class="w-full text-center py-12 text-icpep-blue col-span-full"
     >
         <svg
             class="animate-spin h-8 w-8 mx-auto mb-4"
@@ -54,7 +54,7 @@ const databaseFilters = [
     >
         <button
             id="load-more-btn"
-            class="border border-[#3B82F6] text-[#3B82F6] px-6 py-2 font-medium hover:bg-[#3B82F6] hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="border border-icpep-blue text-icpep-blue px-6 py-2 font-medium hover:bg-icpep-blue hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
             <span id="load-more-text">Load More</span>
             <svg
@@ -235,16 +235,16 @@ const databaseFilters = [
             const cardsHTML = papers
                 .map(
                     (paper: Paper) => `
-                <article class="filterable-item bg-[#151922] border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-[#3B82F6] transition-all duration-300 p-6" data-tags='["${paper.source}"]'>
+                <article class="filterable-item bg-icpep-card border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-icpep-blue transition-all duration-300 p-6" data-tags='["${paper.source}"]'>
                   <div class="flex items-center justify-between mb-4">
                     <div class="flex flex-wrap gap-2">
-                      <span class="bg-[#2d3748] text-[#3B82F6] text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">${paper.source}</span>
+                      <span class="bg-[#2d3748] text-icpep-blue text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">${paper.source}</span>
                     </div>
                     <span class="text-xs text-gray-500 font-mono ml-4 text-right">${paper.date}</span>
                   </div>
-                  <h2 class="font-krona text-lg text-white group-hover:text-[#3B82F6] transition-colors line-clamp-3 mb-2">${paper.title}</h2>
+                  <h2 class="font-krona text-lg text-white group-hover:text-icpep-blue transition-colors line-clamp-3 mb-2">${paper.title}</h2>
                   <div class="text-xs text-gray-400 font-mono mb-6 flex-grow line-clamp-2">By ${paper.authors.join(", ")}</div>
-                  <a href="${paper.link}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-[#3B82F6] transition-colors mt-auto w-max">
+                  <a href="${paper.link}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-icpep-blue transition-colors mt-auto w-max">
                     Read Paper
                     <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>

@@ -11,7 +11,7 @@
     --font-suse: "SUSE", sans-serif;
 
     /* Optional: Standardizing your brand colors for easy utility usage (e.g., bg-icpep-card) */
-    --color-icpep-dark: #121212;
+    --color-icpep-dark: #0B0C10;
     --color-icpep-card: #151922;
     --color-icpep-blue: #3b82f6;
     --color-icpep-accent: #38bdf8;
@@ -100,7 +100,7 @@
     }
 
     .text-supertitle {
-        @apply text-xs font-mono uppercase tracking-widest font-semibold text-[#3B82F6] mb-2 block;
+        @apply text-xs font-mono uppercase tracking-widest font-semibold text-icpep-blue mb-2 block;
     }
 }
 

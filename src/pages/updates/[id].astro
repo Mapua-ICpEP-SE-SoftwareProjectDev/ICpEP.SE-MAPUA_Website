@@ -28,7 +28,7 @@ const { Content } = await render(post);
             <!-- Back Button -->
             <a
                 href="/updates"
-                class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-[#3B82F6] transition-colors mb-8 group"
+                class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-icpep-blue transition-colors mb-8 group"
             >
                 <svg
                     class="w-4 h-4 transition-transform group-hover:-translate-x-1"
@@ -49,7 +49,7 @@ const { Content } = await render(post);
                 <div class="flex flex-wrap gap-2 mb-6">
                     {
                         post.data.tags.map((tag: string) => (
-                            <span class="bg-[#2d3748] text-[#3B82F6] text-xs px-3 py-1 font-semibold tracking-wider uppercase">
+                            <span class="bg-[#2d3748] text-icpep-blue text-xs px-3 py-1 font-semibold tracking-wider uppercase">
                                 {tag}
                             </span>
                         ))
@@ -63,7 +63,7 @@ const { Content } = await render(post);
                 </h2>
 
                 <div
-                    class="flex items-center gap-4 text-sm text-gray-400 font-mono border-l-2 border-[#3B82F6] pl-4"
+                    class="flex items-center gap-4 text-sm text-gray-400 font-mono border-l-2 border-icpep-blue pl-4"
                 >
                     <span>By {post.data.author.join(", ")}</span>
                     <span>•</span>
@@ -137,14 +137,14 @@ const { Content } = await render(post);
     }
 
     .prose-content ul {
-        @apply list-disc pl-6 mb-6 space-y-2 marker:text-[#3B82F6];
+        @apply list-disc pl-6 mb-6 space-y-2 marker:text-icpep-blue;
     }
     .prose-content ol {
-        @apply list-decimal pl-6 mb-6 space-y-2 marker:text-[#3B82F6] font-mono;
+        @apply list-decimal pl-6 mb-6 space-y-2 marker:text-icpep-blue font-mono;
     }
 
     .prose-content a {
-        @apply text-[#3B82F6] hover:underline hover:text-blue-400 transition-colors;
+        @apply text-icpep-blue hover:underline hover:text-blue-400 transition-colors;
     }
 
     .prose-content strong {
@@ -152,10 +152,10 @@ const { Content } = await render(post);
     }
 
     .prose-content blockquote {
-        @apply border-l-4 border-[#3B82F6] bg-[#151922] p-6 mb-6 italic text-gray-400 rounded-r-lg;
+        @apply border-l-4 border-icpep-blue bg-icpep-card p-6 mb-6 italic text-gray-400 rounded-r-lg;
     }
 
     .prose-content code {
-        @apply bg-[#151922] text-[#3B82F6] px-2 py-1 rounded text-sm font-mono border border-[#2d3748];
+        @apply bg-icpep-card text-icpep-blue px-2 py-1 rounded text-sm font-mono border border-[#2d3748];
     }
 </style>

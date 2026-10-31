@@ -26,7 +26,7 @@ const updateFilters = [
     {
         sortedPosts.map((post) => (
             <article
-                class="filterable-item bg-[#151922] border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-[#3B82F6] transition-all duration-300"
+                class="filterable-item bg-icpep-card border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-icpep-blue transition-all duration-300"
                 data-title={post.data.title.toLowerCase()}
                 data-tags={JSON.stringify(post.data.tags)}
             >
@@ -41,7 +41,7 @@ const updateFilters = [
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex flex-wrap gap-2">
                             {post.data.tags.map((tag) => (
-                                <span class="bg-[#2d3748] text-[#3B82F6] text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">
+                                <span class="bg-[#2d3748] text-icpep-blue text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">
                                     {tag}
                                 </span>
                             ))}
