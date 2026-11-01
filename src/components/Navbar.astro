@@ -20,10 +20,7 @@ function isActive(path: string) {
         <!-- Left Side: Logo and Main Nav -->
         <div class="flex items-center h-full gap-12">
             <a href="/">
-                <div
-                    class="w-10 h-10 bg-icpep-blue rounded-full flex-shrink-0"
-                >
-                </div>
+                <img src="/logo.webp" class="w-10 h-10 flex-shrink-0" alt="ICpEP.SE Mapua Logo">
             </a>
 
             <!-- Desktop Navigation Links -->
@@ -357,7 +354,8 @@ function isActive(path: string) {
     </div>
 
     <!-- Inject Modal Component -->
-    <JoinModal isMemberClosed={true} isOfficerClosed={false} />
+    <JoinModal isMemberClosed={true} isOfficerClosed={true} />
+    <!-- Will ask memcom for the forms pa -->
 </header>
 
 <script>

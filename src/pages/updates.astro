@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import FilterPageLayout from "../layouts/FilterPageLayout.astro";
+import FilterCard from "../components/FilterCard.astro";
 
 const posts = await getCollection("updates");
 const sortedPosts = posts.sort(
@@ -25,70 +26,27 @@ const updateFilters = [
 >
     {
         sortedPosts.map((post) => (
-            <article
-                class="filterable-item bg-icpep-card border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-icpep-blue transition-all duration-300"
-                data-title={post.data.title.toLowerCase()}
-                data-tags={JSON.stringify(post.data.tags)}
-            >
-                <div class="w-full h-48 overflow-hidden relative">
-                    <div
-                        class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                        style={`background-image: url('${post.data.image}');`}
-                    />
-                </div>
-
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex flex-wrap gap-2">
-                            {post.data.tags.map((tag) => (
-                                <span class="bg-[#2d3748] text-icpep-blue text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                        <span class="text-meta ml-4 text-right">
-                            {post.data.date
-                                ? post.data.date.toLocaleDateString("en-US", {
-                                      year: "numeric",
-                                      month: "short",
-                                      day: "numeric",
-                                  })
-                                : "TBA"}
-                        </span>
-                    </div>
-
-                    <h2 class="text-card-title group-hover:text-icpep-blue transition-colors line-clamp-2">
-                        {post.data.title}
-                    </h2>
-                    <div class="text-xs text-gray-400 font-mono mb-2">
-                        By {post.data.author && post.data.author.length > 0 ? post.data.author.join(', ') : 'ICpEP Admin'}
-                    </div>
-
-                    <p class="text-body-secondary mb-6 flex-grow line-clamp-3">
-                        {post.data.excerpt}
-                    </p>
-
-                    <a
-                        href={`/updates/${post.id}`}
-                        class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-icpep-blue transition-colors mt-auto w-max"
-                    >
-                        Read More
-                        <svg
-                            class="w-4 h-4 transition-transform group-hover:translate-x-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"
-                            />
-                        </svg>
-                    </a>
-                </div>
-            </article>
+            <FilterCard
+                title={post.data.title}
+                url={`/updates/${post.id}`}
+                date={
+                    post.data.date
+                        ? post.data.date.toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                          })
+                        : "TBA"
+                }
+                authors={
+                    post.data.author && post.data.author.length > 0
+                        ? post.data.author
+                        : ["ICpEP Admin"]
+                }
+                tags={post.data.tags}
+                image={post.data.image}
+                excerpt={post.data.excerpt}
+            />
         ))
     }
 </FilterPageLayout>

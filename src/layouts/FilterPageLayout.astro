@@ -5,10 +5,11 @@ import Footer from "../components/Footer.astro";
 
 interface Props {
     pageTitle: string;
-    headerTag: string;
+    headerTag?: string; 
     headerTitle: string;
     filterLabel?: string;
     filterOptions: { label: string; value: string }[];
+    useClientScript?: boolean; // <-- Add this
 }
 
 const {
@@ -16,13 +17,14 @@ const {
     headerTitle,
     filterLabel = "Filter by:",
     filterOptions,
+    useClientScript = true, // <-- Add this (Defaults to true)
 } = Astro.props;
 ---
 
 <Layout title={pageTitle}>
     <Navbar />
 
-    <main class="flex-grow pt-12 pb-24">
+    <main class="flex-grow pt-12 pb-24" data-use-client-script={useClientScript.toString()}>
         <!-- Dynamic Page Header -->
         <header class="max-w-7xl mx-auto px-6 pt-16 mb-12 text-center md:text-left">
             <h1 class="text-page-title">
@@ -97,62 +99,56 @@ const {
 </Layout>
 
 <script>
-    // This generic script handles filtering for ANY page using this layout.
-    // It targets items with the generic '.filterable-item' class.
-    const searchInput = document.getElementById(
-        "search-input",
-    ) as HTMLInputElement;
-    const filterSelect = document.getElementById(
-        "category-filter",
-    ) as HTMLSelectElement;
-    const items = document.querySelectorAll(
-        ".filterable-item",
-    ) as NodeListOf<HTMLElement>;
-    const noResults = document.getElementById("no-results") as HTMLDivElement;
+    window.addEventListener("DOMContentLoaded", () => {
+        // Check if the current page wants to use the generic script
+        const mainEl = document.querySelector('main[data-use-client-script="true"]');
+        if (!mainEl) return; // If false (like on the Database page), exit immediately.
 
-    function filterItems() {
-        const query = searchInput.value.toLowerCase();
-        const category = filterSelect.value;
-        let visibleCount = 0;
+        const searchInput = document.getElementById("search-input") as HTMLInputElement;
+        const filterSelect = document.getElementById("category-filter") as HTMLSelectElement;
+        const items = document.querySelectorAll(".filterable-item") as NodeListOf<HTMLElement>;
+        const noResults = document.getElementById("no-results") as HTMLDivElement;
 
-        items.forEach((item) => {
-            const title = item.getAttribute("data-title") || "";
-            const tags = JSON.parse(item.getAttribute("data-tags") || "[]");
+        function filterItems() {
+            const query = searchInput.value.toLowerCase();
+            const category = filterSelect.value;
+            let visibleCount = 0;
 
-            const matchesSearch = title.includes(query);
-            const matchesCategory =
-                category === "all" || tags.includes(category);
+            items.forEach((item) => {
+                const title = item.getAttribute("data-title") || "";
+                const tags = JSON.parse(item.getAttribute("data-tags") || "[]");
 
-            if (matchesSearch && matchesCategory) {
-                item.style.display = "flex"; // Layout relies on flex column for cards
-                visibleCount++;
+                const matchesSearch = title.includes(query);
+                const matchesCategory = category === "all" || tags.includes(category);
+
+                if (matchesSearch && matchesCategory) {
+                    item.style.display = "flex";
+                    visibleCount++;
+                } else {
+                    item.style.display = "none";
+                }
+            });
+
+            if (visibleCount === 0) {
+                noResults.classList.remove("hidden");
             } else {
-                item.style.display = "none";
+                noResults.classList.add("hidden");
             }
+        }
+
+        searchInput?.addEventListener("input", filterItems);
+
+        filterSelect?.addEventListener("change", () => {
+            filterItems();
+            const newUrl = new URL(window.location.href);
+            if (filterSelect.value === "all") {
+                newUrl.searchParams.delete("category");
+            } else {
+                newUrl.searchParams.set("category", filterSelect.value);
+            }
+            window.history.replaceState({}, "", newUrl);
         });
 
-        if (visibleCount === 0) {
-            noResults.classList.remove("hidden");
-        } else {
-            noResults.classList.add("hidden");
-        }
-    }
-
-    searchInput?.addEventListener("input", filterItems);
-
-    filterSelect?.addEventListener("change", () => {
-        filterItems();
-
-        const newUrl = new URL(window.location.href);
-        if (filterSelect.value === "all") {
-            newUrl.searchParams.delete("category");
-        } else {
-            newUrl.searchParams.set("category", filterSelect.value);
-        }
-        window.history.replaceState({}, "", newUrl);
-    });
-
-    window.addEventListener("DOMContentLoaded", () => {
         const params = new URLSearchParams(window.location.search);
         const categoryParam = params.get("category");
 

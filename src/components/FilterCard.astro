@@ -1,0 +1,72 @@
+---
+interface Props {
+    title: string;
+    url: string;
+    date: string;
+    image: string; // The '?' is removed; this is now strictly required
+    authors?: string[];
+    tags?: string[];
+    excerpt?: string;
+    sourceTag?: string; 
+}
+
+const { title, url, date, image, authors = [], tags = [], excerpt, sourceTag } = Astro.props;
+---
+
+<article class="filterable-item bg-icpep-card border border-[#2d3748] flex flex-col group hover:-translate-y-1 hover:border-icpep-blue transition-all duration-300 h-full">
+    
+    <!-- Image block now renders unconditionally -->
+    <div class="w-full h-48 overflow-hidden relative flex-shrink-0">
+        <div
+            class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+            style={`background-image: url('${image}');`}
+        />
+    </div>
+
+    <div class="p-6 flex flex-col flex-grow">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                    <span class="bg-[#2d3748] text-icpep-blue text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">
+                        {tag}
+                    </span>
+                ))}
+                
+                {sourceTag && (
+                    <span class="bg-[#2d3748] text-icpep-blue text-[10px] px-2 py-1 font-semibold tracking-wider uppercase">
+                        {sourceTag}
+                    </span>
+                )}
+            </div>
+            <span class="text-meta ml-4 text-right">{date}</span>
+        </div>
+
+        <h2 class="text-card-title group-hover:text-icpep-blue transition-colors line-clamp-2 mb-2">
+            {title}
+        </h2>
+        
+        {authors.length > 0 && (
+            <div class="text-xs text-gray-400 font-mono mb-2">
+                By {authors.join(", ")}
+            </div>
+        )}
+
+        {excerpt && (
+            <p class="text-body-secondary mb-6 flex-grow line-clamp-3">
+                {excerpt}
+            </p>
+        )}
+
+        <!-- Call to Action (CTA) Link -->
+        <a
+            href={url}
+            {...(url.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            class="text-sm font-semibold text-white flex items-center gap-2 group-hover:text-icpep-blue transition-colors mt-auto w-max"
+        >
+            {url.startsWith("http") ? "Read Paper" : "Read More"}
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+        </a>
+    </div>
+</article>
