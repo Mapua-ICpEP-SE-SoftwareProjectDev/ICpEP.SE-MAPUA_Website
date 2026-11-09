@@ -10,9 +10,9 @@ const { isMemberClosed = false, isOfficerClosed = false } = Astro.props;
 
 <div 
     id="join-modal" 
-    class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0B0C10]/90 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 px-6"
+    class="fixed inset-0 z-[100] flex items-center justify-center bg-icpep-dark/90 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 px-6"
 >
-    <div class="bg-[#151922] border border-[#2d3748] w-full max-w-4xl p-8 relative flex flex-col md:flex-row gap-8 shadow-2xl">
+    <div class="bg-icpep-card border border-[#2d3748] w-full max-w-4xl p-8 relative flex flex-col md:flex-row gap-8 shadow-2xl">
         
         <!-- Close Button -->
         <button 
@@ -26,7 +26,7 @@ const { isMemberClosed = false, isOfficerClosed = false } = Astro.props;
         </button>
 
         <!-- Member QR Section -->
-        <div class="flex-1 flex flex-col items-center border border-[#2d3748] p-6 bg-[#0B0C10] relative overflow-hidden group hover:border-[#3B82F6] transition-colors duration-300">
+        <div class="flex-1 flex flex-col items-center border border-[#2d3748] p-6 bg-icpep-dark relative overflow-hidden group hover:border-icpep-blue transition-colors duration-300">
             <h2 class="text-sub-heading mb-4 text-center">Member</h2>
             
             <div class="relative w-48 h-48 mb-6 bg-white p-2 flex items-center justify-center">
@@ -39,7 +39,7 @@ const { isMemberClosed = false, isOfficerClosed = false } = Astro.props;
                 
                 {isMemberClosed && (
                     <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-3">
-                        <svg class="w-8 h-8 text-[#3B82F6] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <svg class="w-8 h-8 text-icpep-blue mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                     </div>
                 )}
             </div>
@@ -48,8 +48,8 @@ const { isMemberClosed = false, isOfficerClosed = false } = Astro.props;
                 <div class="w-full flex flex-col items-center">
                     <p class="text-body-secondary text-xs mb-3 text-center">Membership is currently closed. Enter your Mapúa email to be notified when membership opens.</p>
                     <div class="flex w-full gap-2">
-                        <input type="email" placeholder="Email address" class="w-full bg-[#151922] border border-[#2d3748] text-body-primary text-sm px-3 py-2 outline-none focus:border-[#3B82F6]" />
-                        <button class="bg-[#3B82F6] text-nav-button text-white px-4 hover:bg-blue-600 transition-colors">Notify</button>
+                        <input type="email" placeholder="Email address" class="w-full bg-icpep-card border border-[#2d3748] text-body-primary text-sm px-3 py-2 outline-none focus:border-icpep-blue" />
+                        <button class="bg-icpep-blue text-nav-button text-white px-4 hover:bg-blue-600 transition-colors">Notify</button>
                     </div>
                 </div>
             ) : (
@@ -58,7 +58,7 @@ const { isMemberClosed = false, isOfficerClosed = false } = Astro.props;
         </div>
 
         <!-- Officer QR Section -->
-        <div class="flex-1 flex flex-col items-center border border-[#2d3748] p-6 bg-[#0B0C10] relative overflow-hidden group hover:border-[#3B82F6] transition-colors duration-300">
+        <div class="flex-1 flex flex-col items-center border border-[#2d3748] p-6 bg-icpep-dark relative overflow-hidden group hover:border-icpep-blue transition-colors duration-300">
             <h2 class="text-sub-heading mb-4 text-center">Officer</h2>
             
             <div class="relative w-48 h-48 mb-6 bg-white p-2 flex items-center justify-center">
@@ -71,7 +71,7 @@ const { isMemberClosed = false, isOfficerClosed = false } = Astro.props;
                 
                 {isOfficerClosed && (
                     <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-3">
-                        <svg class="w-8 h-8 text-[#3B82F6] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <svg class="w-8 h-8 text-icpep-blue mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                     </div>
                 )}
             </div>
@@ -80,8 +80,8 @@ const { isMemberClosed = false, isOfficerClosed = false } = Astro.props;
                 <div class="w-full flex flex-col items-center">
                     <p class="text-body-secondary text-xs mb-3 text-center">Applications are currently closed. Enter your Mapúa email to be notified when they open.</p>
                     <div class="flex w-full gap-2">
-                        <input type="email" placeholder="Email address" class="w-full bg-[#151922] border border-[#2d3748] text-body-primary text-sm px-3 py-2 outline-none focus:border-[#3B82F6]" />
-                        <button class="bg-[#3B82F6] text-nav-button text-white px-4 hover:bg-blue-600 transition-colors">Notify</button>
+                        <input type="email" placeholder="Email address" class="w-full bg-icpep-card border border-[#2d3748] text-body-primary text-sm px-3 py-2 outline-none focus:border-icpep-blue" />
+                        <button class="bg-icpep-blue text-nav-button text-white px-4 hover:bg-blue-600 transition-colors">Notify</button>
                     </div>
                 </div>
             ) : (

@@ -2,6 +2,81 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+
+import { Image } from 'astro:assets';
+import aboutImage from '../assets/about.jpg';
+// import Image from "astro/components/Image.astro";
+
+// Define a strict structure for your officer data
+interface Officer {
+    name: string;
+    role: string;
+    isBOD?: boolean;
+    image?: string;
+}
+
+// 1. The Apex
+const apexBranch: Officer[] = [
+    { name: "John Paul T. Cruz", role: "FACULTY ADVISER" },
+    { name: "Jeffrey C. Flores Jr.", role: "PRESIDENT", isBOD: true },
+];
+
+// 2. Internal Affairs
+const internalBranch: Officer[] = [
+    { name: "Frederich Carl S. Cuña", role: "INTERNAL VICE PRESIDENT", isBOD: true },
+    { name: "Juan Miguel C. Ocampo", role: "TREASURER" },
+    { name: "Justin Andrei A. Del Rosario", role: "AUDITOR" },
+    { name: "Yavin Angelo M. Daco-Ag", role: "SECRETARY" },
+    { name: "John Steven B. Calara", role: "ASSISTANT SECRETARY" },
+    { name: "Emmanuel Gabriel V. Visto", role: "CREATIVES & DOCS HEAD" },
+    { name: "Jethro C. Naungayan", role: "CREATIVES & DOCS VICE HEAD" },
+    { name: "Renz Raphael S. Destua", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Edmarc Justin C. Oabel", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Aaron E. Filarca", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Christian Noel S. Estabaya", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Kian Andrei C. Maglipac", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Roxanne-Mae B. Rabimbi", role: "LOGISTICS & EVENTS HEAD" },
+    { name: "Francis Dominic G. Balana", role: "LOGISTICS & EVENTS VICE HEAD" },
+    { name: "Shawn G. Abuan", role: "LOGISTICS & EVENTS VICE HEAD" },
+    { name: "Thomas Joaquin L. Navarro", role: "LOGISTICS & EVENTS OFFICER"},
+    { name: "Clayborne Benedict U. Orteza", role: "LOGISTICS & EVENTS OFFICER"},
+    { name: "Ielahiah M. Tayag", role: "LOGISTICS & EVENTS OFFICER"},
+    { name: "Enrico M. Gorospe", role: "LOGISTICS & EVENTS OFFICER"},
+    { name: "Vince Allen Efren V. Canuto", role: "LOGISTICS & EVENTS OFFICER"},
+];
+
+// 3. Project Development
+const projDevBranch: Officer[] = [
+    // {
+    //     name: "Committee Head Name",
+    //     role: "PROJECT DEVELOPMENT HEAD",
+    //     isBOD: true,
+    // },
+    { name: "Joel Alexander R. Samaniego", role: "PROJECT DEVELOPMENT HEAD", isBOD: true },
+    { name: "Keith Aaron R. Naval", role: "PROJECT DEVELOPMENT HEAD" },
+    { name: "Genesis Jandrei T. Amante", role: "PROJECT DEVELOPMENT VICE HEAD"},
+    { name: "Justin Andre D. De Leon", role: "PROJECT DEVELOPMENT VICE HEAD"},
+    { name: "Jairus Duane I. Mabini", role: "PROJECT DEVELOPMENT OFFICER"},
+    { name: "Lance Joshua E. Samonte", role: "PROJECT DEVELOPMENT OFFICER"},
+];
+
+// 4. External Affairs
+const externalBranch: Officer[] = [
+    { name: "Mathew Daniel D. Reyes", role: "EXTERNAL VICE PRESIDENT", isBOD: true },
+    { name: "Bon Mikell D.J. Matrimonio", role: "MEMBERSHIP HEAD" },
+    { name: "OPEN", role: "MEMBERSHIP VICE HEAD" },
+    { name: "Vincent Luiz S. Albaracin", role: "MEMBERSHIP OFFICER" },
+    { name: "Victor Jerald D. Balagan", role: "MEMBERSHIP OFFICER" },
+    { name: "Lars Elessar C. Cañaveral", role: "MEMBERSHIP OFFICER" },
+    { name: "Alyzee Yvon N. Celaya", role: "EXTERNALS & PR HEAD" },
+    { name: "Gabriel Vincent R. Martirez", role: "EXTERNALS & PR VICE HEAD" },
+    { name: "Brenzo Ingo V. Venida", role: "EXTERNALS & PR OFFICER" },
+    { name: "Gian Nicos I. Villaceran", role: "EXTERNALS & PR OFFICER" },
+    { name: "Rafaello Emmanuel V. Rabusa", role: "4TH YEAR BATCH REP", isBOD:true },
+    { name: "Santi Gabriel C. De Leon", role: "3RD YEAR BATCH REP", isBOD:true },
+    { name: "Jett Nicolo V. Fulgencio", role: "2ND YEAR BATCH REP", isBOD:true },
+    { name: "OPEN", role: "1ST YEAR BATCH REP", isBOD:true },
+];
 ---
 
 <Layout title="About Us">
@@ -31,34 +106,34 @@ import Footer from "../components/Footer.astro";
                         proficiency, we build the bridge between classroom
                         theory and real-world application.
                     </p>
-                    <div class="w-24 h-1 bg-[#3B82F6]"></div>
+                    <div class="w-24 h-1 bg-icpep-blue"></div>
                 </div>
 
                 <!-- Right: Illustration -->
                 <div class="w-full md:w-1/2 relative">
                     <!-- Decorative Background Glow -->
                     <div
-                        class="absolute inset-0 bg-[#3B82F6] blur-[100px] opacity-20 rounded-full"
+                        class="absolute inset-0 bg-icpep-blue blur-[100px] opacity-20 rounded-full"
                     >
                     </div>
 
                     <!-- Image Container -->
                     <div
-                        class="w-full h-[320px] lg:h-[420px] border border-[#2d3748] relative overflow-hidden group bg-[#151922] rounded-xl"
+                        class="w-full h-[320px] lg:h-[420px] border border-[#2d3748] relative overflow-hidden group bg-icpep-card rounded-xl"
                     >
                         <!-- 
                             Replace the src with your actual image path. 
                             If the image is in your public folder, use src="/your-image-name.jpg" 
                         -->
-                        <img
-                            src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1200&auto=format&fit=crop"
+                        <Image
+                            src={aboutImage}
                             alt="ICpEP Mapua Engineering Team"
                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
 
                         <!-- Subtle blue overlay to blend the image into the dark theme -->
                         <div
-                            class="absolute inset-0 bg-[#3B82F6]/10 pointer-events-none mix-blend-overlay"
+                            class="absolute inset-0 bg-icpep-blue/10 pointer-events-none mix-blend-overlay"
                         >
                         </div>
                     </div>
@@ -73,13 +148,13 @@ import Footer from "../components/Footer.astro";
             <!-- Vision: 2 Paragraphs -->
             <div
                 id="vision"
-                class="bg-[#151922] border border-[#2d3748] p-10 hover:border-[#3B82F6] transition-colors duration-300 flex flex-col"
+                class="bg-icpep-card border border-[#2d3748] p-10 hover:border-icpep-blue transition-colors duration-300 flex flex-col"
             >
                 <h2
                     class="font-krona text-2xl text-white mb-6 flex items-center gap-4"
                 >
                     <svg
-                        class="w-8 h-8 text-[#3B82F6]"
+                        class="w-8 h-8 text-icpep-blue"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -123,13 +198,13 @@ import Footer from "../components/Footer.astro";
             <!-- Mission: 6 Items -->
             <div
                 id="mission"
-                class="bg-[#151922] border border-[#2d3748] p-10 hover:border-[#3B82F6] transition-colors duration-300 flex flex-col"
+                class="bg-icpep-card border border-[#2d3748] p-10 hover:border-icpep-blue transition-colors duration-300 flex flex-col"
             >
                 <h2
                     class="font-krona text-2xl text-white flex items-center gap-4"
                 >
                     <svg
-                        class="w-8 h-8 text-[#3B82F6]"
+                        class="w-8 h-8 text-icpep-blue"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -149,37 +224,37 @@ import Footer from "../components/Footer.astro";
                     class="space-y-4 text-gray-300 text-sm md:text-base flex-grow"
                 >
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Promote academic
+                        <span class="text-icpep-blue mt-1">▹</span> Promote academic
                         excellence by providing programs, resources, and collaborative
                         learning opportunities that enhance the academic performance
                         of Computer Engineering students.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Develop the technical
+                        <span class="text-icpep-blue mt-1">▹</span> Develop the technical
                         competence of its members through engineering projects, technical
                         workshops, seminars, competitions, certifications, and other
                         industry-relevant activities.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Cultivate leadership,
+                        <span class="text-icpep-blue mt-1">▹</span> Cultivate leadership,
                         professionalism, and organizational responsibility by empowering
                         members to lead initiatives, manage projects, and actively
                         participate in organizational affairs.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Foster collaboration,
+                        <span class="text-icpep-blue mt-1">▹</span> Foster collaboration,
                         camaraderie, and student well-being through meaningful activities
                         that strengthen teamwork, inclusivity, and holistic development.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Build and strengthen
+                        <span class="text-icpep-blue mt-1">▹</span> Build and strengthen
                         partnerships with the Institute of Computer Engineers of the
                         Philippines Student Edition, Mapúa University, alumni, industry
                         partners, professional organizations, and other academic institutions
                         to advance the interests of the Computer Engineering community.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Uphold the principles
+                        <span class="text-icpep-blue mt-1">▹</span> Uphold the principles
                         of integrity, accountability, ethical conduct, and professional
                         responsibility expected of Computer Engineering students and
                         future engineers.
@@ -191,7 +266,7 @@ import Footer from "../components/Footer.astro";
         <!-- Objectives: 6 Items (Split into 2 columns) -->
         <section id="objectives" class="max-w-7xl mx-auto px-6 mb-8">
             <div
-                class="bg-[#151922] border border-[#2d3748] p-10 hover:border-[#3B82F6] transition-colors duration-300"
+                class="bg-icpep-card border border-[#2d3748] p-10 hover:border-icpep-blue transition-colors duration-300"
             >
                 <h2
                     class="font-krona text-2xl text-white text-center md:text-left"
@@ -205,35 +280,35 @@ import Footer from "../components/Footer.astro";
                     class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-gray-300 text-sm md:text-base"
                 >
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Provide academic
+                        <span class="text-icpep-blue mt-1">▹</span> Provide academic
                         assistance and learning opportunities that support the academic
                         success of its members.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Organize technical,
+                        <span class="text-icpep-blue mt-1">▹</span> Organize technical,
                         professional, and leadership development activities that strengthen
                         the knowledge, competencies, and practical skills of Computer
                         Engineering students.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Encourage active
+                        <span class="text-icpep-blue mt-1">▹</span> Encourage active
                         participation in programs, competitions, conferences, seminars,
                         and initiatives organized by the National Organization, the
                         University, partner organizations, and other institutions
                         that contribute to the growth of its members.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Develop leadership,
+                        <span class="text-icpep-blue mt-1">▹</span> Develop leadership,
                         teamwork, discipline, and organizational involvement through
                         committees, projects, and student-led initiatives.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Promote an organizational
+                        <span class="text-icpep-blue mt-1">▹</span> Promote an organizational
                         culture founded on professionalism, collaboration, innovation,
                         continuous learning, and mutual respect.
                     </li>
                     <li class="flex items-start gap-3">
-                        <span class="text-[#3B82F6] mt-1">▹</span> Represent and protect
+                        <span class="text-icpep-blue mt-1">▹</span> Represent and protect
                         the academic, professional, and general welfare of Computer
                         Engineering students within and outside the University
                     </li>
@@ -244,7 +319,7 @@ import Footer from "../components/Footer.astro";
         <!-- Core Values: 8 Items (Grid of 4 columns) -->
         <section id="core-values" class="max-w-7xl mx-auto px-6 mb-24">
             <div
-                class="bg-[#151922] border border-[#2d3748] p-10 hover:border-[#3B82F6] transition-colors duration-300"
+                class="bg-icpep-card border border-[#2d3748] p-10 hover:border-icpep-blue transition-colors duration-300"
             >
                 <h2
                     class="font-krona text-2xl text-white text-center md:text-left"
@@ -261,7 +336,7 @@ import Footer from "../components/Footer.astro";
                     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
                 >
                     <!-- Value 1 -->
-                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                    <div class="border-l-2 border-icpep-blue pl-4">
                         <h3
                             class="font-bold text-white mb-2 text-sm font-krona"
                         >
@@ -276,7 +351,7 @@ import Footer from "../components/Footer.astro";
                         </p>
                     </div>
                     <!-- Value 2 -->
-                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                    <div class="border-l-2 border-icpep-blue pl-4">
                         <h3
                             class="font-bold text-white mb-2 text-sm font-krona"
                         >
@@ -291,7 +366,7 @@ import Footer from "../components/Footer.astro";
                         </p>
                     </div>
                     <!-- Value 3 -->
-                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                    <div class="border-l-2 border-icpep-blue pl-4">
                         <h3
                             class="font-bold text-white mb-2 text-sm font-krona"
                         >
@@ -306,7 +381,7 @@ import Footer from "../components/Footer.astro";
                         </p>
                     </div>
                     <!-- Value 4 -->
-                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                    <div class="border-l-2 border-icpep-blue pl-4">
                         <h3
                             class="font-bold text-white mb-2 text-sm font-krona"
                         >
@@ -321,7 +396,7 @@ import Footer from "../components/Footer.astro";
                         </p>
                     </div>
                     <!-- Value 5 -->
-                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                    <div class="border-l-2 border-icpep-blue pl-4">
                         <h3
                             class="font-bold text-white mb-2 text-sm font-krona"
                         >
@@ -335,7 +410,7 @@ import Footer from "../components/Footer.astro";
                         </p>
                     </div>
                     <!-- Value 6 -->
-                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                    <div class="border-l-2 border-icpep-blue pl-4">
                         <h3
                             class="font-bold text-white mb-2 text-sm font-krona"
                         >
@@ -349,7 +424,7 @@ import Footer from "../components/Footer.astro";
                         </p>
                     </div>
                     <!-- Value 7 -->
-                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                    <div class="border-l-2 border-icpep-blue pl-4">
                         <h3
                             class="font-bold text-white mb-2 text-sm font-krona"
                         >
@@ -364,7 +439,7 @@ import Footer from "../components/Footer.astro";
                         </p>
                     </div>
                     <!-- Value 8 -->
-                    <div class="border-l-2 border-[#3B82F6] pl-4">
+                    <div class="border-l-2 border-icpep-blue pl-4">
                         <h3
                             class="font-bold text-white mb-2 text-sm font-krona"
                         >
@@ -383,12 +458,12 @@ import Footer from "../components/Footer.astro";
         </section>
 
         <!-- History Section -->
-        <section id="history" class="max-w-4xl mx-auto px-6 mb-24 text-center">
+        <!-- <section id="history" class="max-w-4xl mx-auto px-6 mb-24 text-center">
             <h2 class="font-krona text-2xl md:text-3xl text-white mb-8">
                 Our History
             </h2>
             <div
-                class="bg-[#151922] border border-[#2d3748] p-8 md:p-12 text-left hover:border-[#3B82F6] transition-colors duration-300"
+                class="bg-icpep-card border border-[#2d3748] p-8 md:p-12 text-left hover:border-icpep-blue transition-colors duration-300"
             >
                 <p
                     class="text-gray-300 leading-relaxed text-sm md:text-base mb-6"
@@ -408,85 +483,138 @@ import Footer from "../components/Footer.astro";
                     active creators and innovators in the digital landscape.
                 </p>
             </div>
-        </section>
+        </section> -->
 
         <!-- Officers Section -->
-        <section id="officers" class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="font-krona text-2xl md:text-3xl text-white">
-                    Executive Officers
+        <section
+            id="officers"
+            class="scroll-mt-24 max-w-7xl mx-auto px-6 mb-24"
+        >
+            <div class="text-center mb-16">
+                <h2 class="text-section-heading mt-0 mb-4">
+                    Organization Structure
                 </h2>
-                <p class="text-gray-400 mt-4 text-sm">
-                    The dedicated team leading the organization.
+                <p class="text-body-secondary">
+                    The dedicated team leading Mapúa-ICpEP.SE.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Officer Card 1 -->
-                <div
-                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
-                >
+            <!-- The Apex (Adviser & President) -->
+            <div
+                class="flex flex-col md:flex-row justify-center items-center gap-8 mb-16"
+            >
+                {
+                    apexBranch.map((officer) => (
+                        <div class="bg-icpep-card border border-[#2d3748] p-6 w-full max-w-sm text-center relative hover:-translate-y-1 hover:border-icpep-blue transition-all duration-300">
+                            {officer.isBOD && (
+                                <span class="absolute top-4 right-4 text-badge bg-[#2d3748]">
+                                    B.O.D.
+                                </span>
+                            )}
+                            <div class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-icpep-blue" />
+                            <h3 class="text-card-title text-sm">
+                                {officer.name}
+                            </h3>
+                            <p class="text-supertitle mt-2">{officer.role}</p>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- The Executive Pillars (Stacked Rows) -->
+            <div class="flex flex-col gap-16">
+                <!-- 1. Internal Affairs Branch -->
+                <div class="flex flex-col gap-6">
                     <div
-                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-[#3B82F6]"
+                        class="border-b border-icpep-blue pb-2 mb-4 text-center"
                     >
+                        <span class="text-supertitle text-icpep-blue text-lg"
+                            >Internal Affairs</span
+                        >
                     </div>
-                    <h3 class="text-white font-krona text-sm mb-1">Jane Doe</h3>
-                    <p
-                        class="text-[#3B82F6] text-xs font-semibold tracking-wide"
-                    >
-                        PRESIDENT
-                    </p>
+                    <!-- Flex wrap allows cards to sit in rows and center automatically -->
+                    <div class="flex flex-wrap justify-center gap-6">
+                        {
+                            internalBranch.map((officer) => (
+                                <div class="bg-icpep-card border border-[#2d3748] p-6 w-full sm:w-80 text-center relative hover:border-icpep-blue transition-colors duration-300">
+                                    {officer.isBOD && (
+                                        <span class="absolute top-4 right-4 text-badge bg-[#2d3748]">
+                                            B.O.D.
+                                        </span>
+                                    )}
+                                    <div class="w-16 h-16 bg-[#1e293b] rounded-full mx-auto mb-4 border border-icpep-blue" />
+                                    <h3 class="text-card-title text-sm">
+                                        {officer.name}
+                                    </h3>
+                                    <p class="text-supertitle mt-2">
+                                        {officer.role}
+                                    </p>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
-                <!-- Officer Card 2 -->
-                <div
-                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
-                >
+
+                <!-- 2. External Affairs Branch -->
+                <div class="flex flex-col gap-6">
                     <div
-                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-gray-600"
+                        class="border-b border-icpep-blue pb-2 mb-4 text-center"
                     >
+                        <span class="text-supertitle text-icpep-blue text-lg"
+                            >External Affairs</span
+                        >
                     </div>
-                    <h3 class="text-white font-krona text-sm mb-1">
-                        John Smith
-                    </h3>
-                    <p
-                        class="text-gray-400 text-xs font-semibold tracking-wide"
-                    >
-                        VICE PRESIDENT
-                    </p>
+                    <div class="flex flex-wrap justify-center gap-6">
+                        {
+                            externalBranch.map((officer) => (
+                                <div class="bg-icpep-card border border-[#2d3748] p-6 w-full sm:w-80 text-center relative hover:border-icpep-blue transition-colors duration-300">
+                                    {officer.isBOD && (
+                                        <span class="absolute top-4 right-4 text-badge bg-[#2d3748]">
+                                            B.O.D.
+                                        </span>
+                                    )}
+                                    <div class="w-16 h-16 bg-[#1e293b] rounded-full mx-auto mb-4 border border-icpep-blue" />
+                                    <h3 class="text-card-title text-sm">
+                                        {officer.name}
+                                    </h3>
+                                    <p class="text-supertitle mt-2">
+                                        {officer.role}
+                                    </p>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
-                <!-- Officer Card 3 -->
-                <div
-                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
-                >
+
+                <!-- 3. Project Development Branch -->
+                <div class="flex flex-col gap-6">
                     <div
-                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-gray-600"
+                        class="border-b border-icpep-blue pb-2 mb-4 text-center"
                     >
+                        <span class="text-supertitle text-icpep-blue text-lg"
+                            >Project Development</span
+                        >
                     </div>
-                    <h3 class="text-white font-krona text-sm mb-1">
-                        Alex Johnson
-                    </h3>
-                    <p
-                        class="text-gray-400 text-xs font-semibold tracking-wide"
-                    >
-                        SECRETARY
-                    </p>
-                </div>
-                <!-- Officer Card 4 -->
-                <div
-                    class="bg-[#151922] border border-[#2d3748] p-6 text-center hover:-translate-y-1 transition-transform duration-300"
-                >
-                    <div
-                        class="w-24 h-24 bg-[#1e293b] rounded-full mx-auto mb-4 border-2 border-gray-600"
-                    >
+                    <div class="flex flex-wrap justify-center gap-6">
+                        {
+                            projDevBranch.map((officer) => (
+                                <div class="bg-icpep-card border border-[#2d3748] p-6 w-full sm:w-80 text-center relative hover:border-icpep-blue transition-colors duration-300">
+                                    {officer.isBOD && (
+                                        <span class="absolute top-4 right-4 text-badge bg-[#2d3748]">
+                                            B.O.D.
+                                        </span>
+                                    )}
+                                    <div class="w-16 h-16 bg-[#1e293b] rounded-full mx-auto mb-4 border border-icpep-blue" />
+                                    <h3 class="text-card-title text-sm">
+                                        {officer.name}
+                                    </h3>
+                                    <p class="text-supertitle mt-2">
+                                        {officer.role}
+                                    </p>
+                                </div>
+                            ))
+                        }
                     </div>
-                    <h3 class="text-white font-krona text-sm mb-1">
-                        Sam Rivera
-                    </h3>
-                    <p
-                        class="text-gray-400 text-xs font-semibold tracking-wide"
-                    >
-                        TREASURER
-                    </p>
                 </div>
             </div>
         </section>

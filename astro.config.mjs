@@ -11,5 +11,8 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [icon()]
+  integrations: [icon()],
+  
+  site: 'https://Mapua-ICpEP-SE-SoftwareProjectDev.github.io',
+  base: '/ICpEP.SE-MAPUA_Website'
 });

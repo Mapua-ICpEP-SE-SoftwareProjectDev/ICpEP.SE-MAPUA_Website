@@ -13,6 +13,7 @@ const { title } = Astro.props;
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/ico" href="/public/favicon.ico" />
         <title>{title}</title>
         <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,7 +23,7 @@ const { title } = Astro.props;
         /> -->
     </head>
     <body
-        class="bg-[#0B0C10] text-white min-h-screen flex flex-col font-suse dot-grid"
+        class="bg-icpep-dark text-white min-h-screen flex flex-col font-suse dot-grid"
     >
         <slot />
     </body>
