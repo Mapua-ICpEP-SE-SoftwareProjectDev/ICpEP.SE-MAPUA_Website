@@ -5,7 +5,7 @@ import Footer from "../components/Footer.astro";
 
 import { Image } from 'astro:assets';
 import aboutImage from '../assets/about.jpg';
-import Image from "astro/components/Image.astro";
+// import Image from "astro/components/Image.astro";
 
 // Define a strict structure for your officer data
 interface Officer {
@@ -30,19 +30,19 @@ const internalBranch: Officer[] = [
     { name: "John Steven B. Calara", role: "ASSISTANT SECRETARY" },
     { name: "Emmanuel Gabriel V. Visto", role: "CREATIVES & DOCS HEAD" },
     { name: "Jethro C. Naungayan", role: "CREATIVES & DOCS VICE HEAD" },
-    { name: "Renz Raphael S. Destua", role: "CREATIVES & DOCS MEMBER"},
-    { name: "Edmarc Justin C. Oabel", role: "CREATIVES & DOCS MEMBER"},
-    { name: "Aaron E. Filarca", role: "CREATIVES & DOCS MEMBER"},
-    { name: "Christian Noel S. Estabaya", role: "CREATIVES & DOCS MEMBER"},
-    { name: "Kian Andrei C. Maglipac", role: "CREATIVES & DOCS MEMBER"},
-    { name: "Francis Dominic G. Balana", role: "LOGISTICS & EVENTS HEAD", isBOD: true },
+    { name: "Renz Raphael S. Destua", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Edmarc Justin C. Oabel", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Aaron E. Filarca", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Christian Noel S. Estabaya", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Kian Andrei C. Maglipac", role: "CREATIVES & DOCS OFFICER"},
+    { name: "Roxanne-Mae B. Rabimbi", role: "LOGISTICS & EVENTS HEAD" },
+    { name: "Francis Dominic G. Balana", role: "LOGISTICS & EVENTS VICE HEAD" },
     { name: "Shawn G. Abuan", role: "LOGISTICS & EVENTS VICE HEAD" },
-    { name: "Roxanne-Mae B. Rabimbi", role: "LOGISTICS & EVENTS MEMBER" },
-    { name: "Thomas Joaquin L. Navarro", role: "LOGISTICS & EVENTS MEMBER"},
-    { name: "Clayborne Benedict U. Orteza", role: "LOGISTICS & EVENTS MEMBER"},
-    { name: "Ielahiah M. Tayag", role: "LOGISTICS & EVENTS MEMBER"},
-    { name: "Enrico M. Gorospe", role: "LOGISTICS & EVENTS MEMBER"},
-    { name: "Vince Allen Efren V. Canuto", role: "LOGISTICS & EVENTS MEMBER"},
+    { name: "Thomas Joaquin L. Navarro", role: "LOGISTICS & EVENTS OFFICER"},
+    { name: "Clayborne Benedict U. Orteza", role: "LOGISTICS & EVENTS OFFICER"},
+    { name: "Ielahiah M. Tayag", role: "LOGISTICS & EVENTS OFFICER"},
+    { name: "Enrico M. Gorospe", role: "LOGISTICS & EVENTS OFFICER"},
+    { name: "Vince Allen Efren V. Canuto", role: "LOGISTICS & EVENTS OFFICER"},
 ];
 
 // 3. Project Development
@@ -52,12 +52,12 @@ const projDevBranch: Officer[] = [
     //     role: "PROJECT DEVELOPMENT HEAD",
     //     isBOD: true,
     // },
-    { name: "Joel Alexander R. Samaniego", role: "SOFTWARE DEVELOPMENT HEAD", isBOD: true },
-    { name: "Genesis Jandrei T. Amante", role: "SOFTWARE DEVELOPMENT MEMBER"},
-    { name: "Jairus Duane I. Mabini", role: "SOFTWARE DEVELOPMENT MEMBER"},
-    { name: "Lance Joshua E. Samonte", role: "SOFTWARE DEVELOPMENT MEMBER"},
-    { name: "Justin Andre D. De Leon", role: "SOFTWARE DEVELOPMENT MEMBER"},
-    { name: "Keith Aaron R. Naval", role: "HARDWARE DEVELOPMENT HEAD" },
+    { name: "Joel Alexander R. Samaniego", role: "PROJECT DEVELOPMENT HEAD", isBOD: true },
+    { name: "Keith Aaron R. Naval", role: "PROJECT DEVELOPMENT HEAD" },
+    { name: "Genesis Jandrei T. Amante", role: "PROJECT DEVELOPMENT VICE HEAD"},
+    { name: "Justin Andre D. De Leon", role: "PROJECT DEVELOPMENT VICE HEAD"},
+    { name: "Jairus Duane I. Mabini", role: "PROJECT DEVELOPMENT OFFICER"},
+    { name: "Lance Joshua E. Samonte", role: "PROJECT DEVELOPMENT OFFICER"},
 ];
 
 // 4. External Affairs
@@ -65,13 +65,13 @@ const externalBranch: Officer[] = [
     { name: "Mathew Daniel D. Reyes", role: "EXTERNAL VICE PRESIDENT", isBOD: true },
     { name: "Bon Mikell D.J. Matrimonio", role: "MEMBERSHIP HEAD" },
     { name: "OPEN", role: "MEMBERSHIP VICE HEAD" },
-    { name: "Vincent Luiz S. Albaracin", role: "MEMBERSHIP MEMBER" },
-    { name: "Victor Jerald D. Balagan", role: "MEMBERSHIP MEMBER" },
-    { name: "Lars Elessar C. Cañaveral", role: "MEMBERSHIP MEMBER" },
+    { name: "Vincent Luiz S. Albaracin", role: "MEMBERSHIP OFFICER" },
+    { name: "Victor Jerald D. Balagan", role: "MEMBERSHIP OFFICER" },
+    { name: "Lars Elessar C. Cañaveral", role: "MEMBERSHIP OFFICER" },
     { name: "Alyzee Yvon N. Celaya", role: "EXTERNALS & PR HEAD" },
     { name: "Gabriel Vincent R. Martirez", role: "EXTERNALS & PR VICE HEAD" },
-    { name: "Brenzo Ingo V. Venida", role: "EXTERNALS & PR MEMBER" },
-    { name: "Gian Nicos I. Villaceran", role: "EXTERNALS & PR MEMBER" },
+    { name: "Brenzo Ingo V. Venida", role: "EXTERNALS & PR OFFICER" },
+    { name: "Gian Nicos I. Villaceran", role: "EXTERNALS & PR OFFICER" },
     { name: "Rafaello Emmanuel V. Rabusa", role: "4TH YEAR BATCH REP", isBOD:true },
     { name: "Santi Gabriel C. De Leon", role: "3RD YEAR BATCH REP", isBOD:true },
     { name: "Jett Nicolo V. Fulgencio", role: "2ND YEAR BATCH REP", isBOD:true },
