@@ -13,6 +13,6 @@ export default defineConfig({
 
   integrations: [icon()],
   
-  site: 'https://Mapua-ICpEP-SE-SoftwareProjectDev.github.io',
-  base: '/ICpEP.SE-MAPUA_Website'
+  site: 'https://Mapua-ICpEP-SE.github.io',
+  // base: '/ICpEP.SE-MAPUA_Website'
 });
